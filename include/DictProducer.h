@@ -27,25 +27,25 @@ class DictProducer {
   DictProducer(const string& corpus_path, SplitTool* tool);
 
   /**
-   * @note 创建词典
+   * @brief 创建词典
    * @param stop_words 停用词集合
    */
   void buildDict(const unordered_set<string>& stop_words);
 
   /**
-   * @note 创建字符位置索引
+   * @brief 创建字符位置索引
    * @param stop_words 停用词集合
    */
   void createIndex();
 
   /**
-   * @note 存储词典和字符位置索引
+   * @brief 存储词典和字符位置索引
    * @param dict_path  词典存储路径
    * @param charIndex_path  字符位置索引存储路径
    */
   void store(const string& dict_path, const string& charIndex_path);
   /**
-   * @note 获取停用词集合
+   * @brief 获取停用词集合
    * @param stop_words_path  停用词所在文件/文件夹路径
    * @param files 文件路径集合
    */
@@ -54,14 +54,14 @@ class DictProducer {
 
  private:
   /**
-   * @note 获取文件/文件夹下所有文件路径
+   * @brief 获取文件/文件夹下所有文件路径
    * @param path  文件/文件夹路径
    * @param files 文件路径集合
    */
   static void getFilesPath(const string& path, vector<string>& files);
 
   /**
-   * @note 计算字符所占字节数
+   * @brief 计算字符所占字节数
    * @param ch 字符
    */
   size_t nBytesCode(const char ch);
