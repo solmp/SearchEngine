@@ -1,5 +1,5 @@
 /**
- * 使用cppjieba分词工具，对中英文文本进行分词
+ * @brief 使用cppjieba分词工具，对中英文文本进行分词
  */
 
 #ifndef _SPLITTOOLCPPJIEBA_H
@@ -11,17 +11,16 @@
 
 class SplitToolCppJieba : public SplitTool {
  public:
-  SplitToolCppJieba()
-      : _jieba(_config.DICT_PATH, _config.HMM_PATH, _config.USER_DICT_PATH,
-               _config.IDF_PATH, _config.STOP_WORD_PATH) {}
+  SplitToolCppJieba(json config)
+      : _jieba(config["DICT_PATH"], config["HMM_PATH"],
+               config["USER_DICT_PATH"], config["IDF_PATH"],
+               config["STOP_WORD_PATH"]) {}
 
   void cut(const string& str, vector<string>& words) override {
     _jieba.Cut(str, words, true);
   }
 
  private:
-  SplitToolConfig _config;  // 分词工具配置
-  cppjieba::Jieba _jieba;   // jieba 分词工具
+  cppjieba::Jieba _jieba;  // jieba 分词工具
 };
-
 #endif  //_SPLITTOOLCPPJIEBA_H
