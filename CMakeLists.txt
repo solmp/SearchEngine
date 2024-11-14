@@ -26,11 +26,14 @@ enable_testing()
 # 针对每个测试文件创建单独的可执行程序和测试
 foreach(test_file ${TEST_FILES})
     get_filename_component(test_name ${test_file} NAME_WE)
-    add_executable(${test_name} ${test_file})
+    string(REGEX REPLACE "test/test(.*).cpp" "src/\\1.cpp" src_file ${test_file})
+    if(EXISTS ${src_file})
+        add_executable(${test_name} ${test_file} ${src_file})
+    else()
+        add_executable(${test_name} ${test_file})
+    endif()
     add_test(NAME ${test_name} COMMAND ${test_name})
 endforeach()
-# add_executable(YourTestExecutableName ${TEST_FILES})
-# add_test(NAME YourTestName COMMAND YourTestExecutableName)
 
 # 设置输出目录
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
