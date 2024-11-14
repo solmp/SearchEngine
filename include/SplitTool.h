@@ -1,5 +1,4 @@
 /**
- * Project SearchEngine
  * 分词工具接口
  */
 

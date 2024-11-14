@@ -1,5 +1,4 @@
 /**
- * Project SearchEngine
  * 使用cppjieba分词工具，对中英文文本进行分词
  */
 
@@ -21,8 +20,8 @@ class SplitToolCppJieba : public SplitTool {
   }
 
  private:
-  SplitToolConfig _config;
-  cppjieba::Jieba _jieba;
+  SplitToolConfig _config;  // 分词工具配置
+  cppjieba::Jieba _jieba;   // jieba 分词工具
 };
 
 #endif  //_SPLITTOOLCPPJIEBA_H
