@@ -11,6 +11,7 @@
 #include <unordered_set>
 
 #include "SplitToolCppJieba.h"
+#include "DirScanner.h"
 
 using std::ifstream;
 using std::ofstream;
@@ -53,13 +54,6 @@ class DictProducer {
                             unordered_set<string>& stop_words);
 
  private:
-  /**
-   * @brief 获取文件/文件夹下所有文件路径
-   * @param path  文件/文件夹路径
-   * @param files 文件路径集合
-   */
-  static void getFilesPath(const string& path, vector<string>& files);
-
   /**
    * @brief 计算字符所占字节数
    * @param ch 字符

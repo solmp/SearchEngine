@@ -24,7 +24,7 @@ file(GLOB TEST_FILES "${CMAKE_SOURCE_DIR}/test/*.cpp")
 # 创建测试
 enable_testing()
 # 针对每个测试文件创建单独的可执行程序和测试
-list(APPEND public_src_file "src/Configuration.cpp")
+list(APPEND public_src_file "src/Configuration.cpp" "src/DirScanner.cpp")
 foreach(test_file ${TEST_FILES})
     get_filename_component(test_name ${test_file} NAME_WE)
     string(REGEX REPLACE "test/test(.*).cpp" "src/\\1.cpp" src_file ${test_file})

@@ -2,12 +2,13 @@
 
 DictProducer::DictProducer(const string& corpus_path, SplitTool* tool)
     : _cuttor(tool) {
-  getFilesPath(corpus_path, _files);  // 获取所有语料文件路径
+  DirScanner dir_scanner; 
+  dir_scanner.traversePath(corpus_path);  // 获取所有语料文件路径   
+  _files.swap(dir_scanner.getFiles());   
 }
 
 void DictProducer::buildDict(const unordered_set<string>& stop_words) {
   unordered_map<string, int> dict;
-
   // 分词并统计词频
   for (const string filepath : _files) {
     ifstream ifs(filepath);
@@ -98,24 +99,11 @@ void DictProducer::store(const string& dict_path,
   ofs.close();
 }
 
-void DictProducer::getFilesPath(const string& path, vector<string>& files) {
-  files.clear();
-  if (std::filesystem::is_directory(path)) {
-    for (const auto& entry : std::filesystem::recursive_directory_iterator(path)) {
-      if (entry.is_regular_file()) {
-        files.push_back(entry.path().string());
-      }
-    }
-  } else if (std::filesystem::is_regular_file(path)) {
-    files.push_back(path);
-  }
-}
-
 void DictProducer::LoadStopWords(const string& stop_words_path,
                                  unordered_set<string>& stop_words) {
-  vector<string> stop_words_files_path;
-  getFilesPath(stop_words_path, stop_words_files_path);
-  for (const string& stop_words_file : stop_words_files_path) {
+  DirScanner dir_scanner;
+  dir_scanner.traversePath(stop_words_path);
+  for (const string& stop_words_file : dir_scanner.getFiles()) {
     ifstream ifs(stop_words_file);
     if (!ifs) {
       throw std::runtime_error("ifstream open file error!");
