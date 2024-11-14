@@ -37,6 +37,10 @@ void Configuration::destroy() {
 ConfigCategory Configuration::chooseCategory(const string& category) {
   if (category == "SPLIT_TOOL") {
     return SPLIT_TOOL;
+  } else if (category == "ASSETS") {
+    return ASSETS;
+  } else if (category == "SAVE") {
+    return SAVE;
   }
   return OTHER;
 }
