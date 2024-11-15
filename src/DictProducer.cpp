@@ -10,7 +10,7 @@ DictProducer::DictProducer(const string& corpus_path, SplitTool* tool)
 void DictProducer::buildDict(const unordered_set<string>& stop_words) {
   unordered_map<string, int> dict;
   // 分词并统计词频
-  for (const string filepath : _files) {
+  for (const string& filepath : _files) {
     ifstream ifs(filepath);
     if (!ifs) {
       throw std::runtime_error("ifstream open file error!");
@@ -59,9 +59,9 @@ void DictProducer::buildDict(const unordered_set<string>& stop_words) {
 
 void DictProducer::createIndex() {
   size_t size = _dict.size();
-  for (int i = 0; i < size; ++i) {
+  for (size_t i = 0; i < size; ++i) {
     size_t len = _dict[i].first.size();
-    for (int j = 0; j < len;) {
+    for (size_t j = 0; j < len;) {
       // 计算字符所占字节数
       size_t width = nBytesCode(_dict[i].first[0]);
       // 截取字符，保存索引
