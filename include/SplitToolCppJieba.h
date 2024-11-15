@@ -16,9 +16,14 @@ using std::unordered_set;
 
 class SplitToolCppJieba : public SplitTool {
  public:
-  SplitToolCppJieba(json config);
+  SplitToolCppJieba(json& config)
+      : _jieba(config["DICT_PATH"], config["HMM_PATH"],
+               config["USER_DICT_PATH"], config["IDF_PATH"],
+               config["STOP_WORD_PATH"]) {}
 
-  void cut(const string& str, vector<string>& words) override;
+  void cut(const string& str, vector<string>& words) override {
+    _jieba.Cut(str, words, true);
+  }
 
  private:
   cppjieba::Jieba _jieba;  // jieba 分词工具

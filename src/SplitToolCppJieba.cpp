@@ -1,13 +1,5 @@
 #include "SplitToolCppJieba.h"
 
-SplitToolCppJieba::SplitToolCppJieba(json config)
-    : _jieba(config["DICT_PATH"], config["HMM_PATH"], config["USER_DICT_PATH"],
-             config["IDF_PATH"], config["STOP_WORD_PATH"]) {}
-
-void SplitToolCppJieba::cut(const string& str, vector<string>& words) {
-  _jieba.Cut(str, words, true);
-}
-
 void LoadStopWords(const string& stop_words_path,
                    unordered_set<string>& stop_words) {
   DirScanner dir_scanner;

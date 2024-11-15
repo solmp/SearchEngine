@@ -1,60 +1,90 @@
 #include "DictProducer.h"
 
-DictProducer::DictProducer(const string& corpus_path, SplitTool* tool)
-    : _cuttor(tool) {
-  DirScanner dir_scanner; 
-  dir_scanner.traversePath(corpus_path);  // 获取所有语料文件路径   
-  _files.swap(dir_scanner.getFiles());   
-}
+DictProducer::DictProducer(SplitTool* tool) : _cuttor(tool) {}
 
-void DictProducer::buildDict(const unordered_set<string>& stop_words) {
-  unordered_map<string, int> dict;
-  // 分词并统计词频
-  for (const string& filepath : _files) {
-    ifstream ifs(filepath);
+void DictProducer::buildEnDict(const string& en_corpus_path) {
+  // 获取所有英文语料路径
+  DirScanner scanner;
+  scanner.traversePath(en_corpus_path);
+  // 遍历所有语料，统计词频
+  for (const string& file_path : scanner.getFiles()) {
+    ifstream ifs(file_path);
     if (!ifs) {
       throw std::runtime_error("ifstream open file error!");
     }
     string line;
-    string last_word = "";
-    while (std::getline(ifs, line)) {
-      vector<string> words;
-      // 如果上一行最后一个字符是字母，则与本行第一个字符连接，以保证中文单词完整
-      if (!line.empty() && isalpha(line.front())) {
-        last_word += " ";
-      }
-      // 将大写字母转换为小写字母
-      for (auto& c : line) {
-        if (isalpha(c)) {
-          c = tolower(c);
+    while (std::getline(ifs, line), !ifs.eof()) {
+      // 语料清洗：非字母字符转换为空格，大写字母转换为小写字母
+      for (auto& ch : line) {
+        if (!isalpha(ch)) {
+          ch = ' ';
+        } else if (isupper(ch)) {
+          ch = tolower(ch);
         }
       }
-      // 分词
+      // 词频统计
+      istringstream iss(line);
+      string word;
+      while (iss >> word, !iss.eof()) {
+        ++_freq_dict[word];
+      }
+    }
+    ifs.close();
+  }
+}
+
+void DictProducer::buildCnDict(const string& cn_corpus_path) {
+  // 获取所有中文语料路径
+  DirScanner scanner;
+  scanner.traversePath(cn_corpus_path);
+  // 遍历所有语料，cppjieba分词统计词频
+  string line;
+  for (const string& file_path : scanner.getFiles()) {
+    string last_word = "";
+    ifstream ifs(file_path);
+    if (!ifs) {
+      throw std::runtime_error("ifstream open file error!");
+    }
+    while (std::getline(ifs, line)) {
+      vector<string> words;
+      // 分词，将前一行最后一个词与本行第一个字符连接，以保证中文单词完整
       _cuttor->cut(last_word + line, words);
       // 词频统计
       size_t n = words.size();
       for (size_t i = 0; i < n - 1; ++i) {
-        ++dict[words[i]];
+        ++_freq_dict[words[i]];
       }
       if (n != 0) last_word = words[n - 1];
     }
-    ++dict[last_word];
+    ++_freq_dict[last_word];
     ifs.close();
   }
+}
+
+void DictProducer::buildDict(Configuration* config,
+                             const unordered_set<string>& stop_words) {
+  json& assets = config->getConfigMap(ASSETS);
+  string en_corpus_path = assets["EN_CORPUS_PATH"];
+  string cn_corpus_path = assets["CN_CORPUS_PATH"];
+  fprintf(stderr, "en_corpus_path: %s\n", en_corpus_path.c_str());
+  fprintf(stderr, "cn_corpus_path: %s\n", cn_corpus_path.c_str());
+  buildEnDict(en_corpus_path);  // 构建英文词典
+  buildCnDict(cn_corpus_path);  // 构建中文词典
+  fprintf(stderr, "en_dict size: %lu\n", _freq_dict.size());
+  fprintf(stderr, "cn_dict size: %lu\n", _freq_dict.size());
 
   // 过滤停用词
-  for (auto it = dict.begin(); it != dict.end();) {
+  for (auto it = _freq_dict.begin(); it != _freq_dict.end();) {
     if (stop_words.find(it->first) != stop_words.end()) {
-      it = dict.erase(it);
+      it = _freq_dict.erase(it);
     } else {
       ++it;
     }
   }
 
   // 构建词典
-  for (auto word : dict) {
-    _dict.emplace_back(word);
-  }
+  _dict.reserve(_freq_dict.size());
+  _dict.assign(_freq_dict.begin(), _freq_dict.end());
 }
 
 void DictProducer::createIndex() {
@@ -72,10 +102,10 @@ void DictProducer::createIndex() {
   }
 }
 
-void DictProducer::store(const string& dict_path,
-                         const string& charIndex_path) {
+void DictProducer::store(Configuration* config) {
+  json& save_config = config->getConfigMap(SAVE);
   // 存储词典
-  ofstream ofs(dict_path);
+  ofstream ofs(save_config["DICT_PATH"]);
   if (!ofs) {
     throw std::runtime_error("ofstream open file error!");
   }
@@ -85,7 +115,7 @@ void DictProducer::store(const string& dict_path,
   ofs.close();
 
   // 存储字符位置索引
-  ofs.open(charIndex_path);
+  ofs.open(save_config["CHAR_INDEX_PATH"]);
   if (!ofs) {
     throw std::runtime_error("ofstream open file error!");
   }
@@ -98,4 +128,3 @@ void DictProducer::store(const string& dict_path,
   }
   ofs.close();
 }
-
