@@ -17,7 +17,16 @@ using std::unordered_map;
 #define TOP_N 5  // 关键词个数
 class PageLibPreprocessor {
  public:
+  /**
+   * @brief 构造函数
+   * @param config: 配置文件
+   * @param tool: 分词工具
+   */
   PageLibPreprocessor(Configuration* config, SplitTool* tool);
+
+  /**
+   * @brief 去重网页，生成去重网页库和去重网页偏移库
+   */
   void cutRedundantPage();
 
   void bulidInvertIndexMap();
@@ -25,6 +34,9 @@ class PageLibPreprocessor {
   void storeOnDisk();
 
  private:
+  /**
+   * @brief 读取未去重的网页偏移库
+   */
   void readOldOffsetLib();
 
  private:

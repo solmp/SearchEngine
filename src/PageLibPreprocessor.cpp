@@ -40,8 +40,8 @@ void PageLibPreprocessor::cutRedundantPage() {
   assert(ofs_offset);
 
   off_t new_offset = 0;
-  size_t new_id = 0;
   for (auto& it : _offsetLib) {
+    size_t doc_id = it.first;
     off_t offset = it.second.first;
     size_t size = it.second.second;
     string doc;
@@ -49,14 +49,9 @@ void PageLibPreprocessor::cutRedundantPage() {
     // 读取文档
     doc.resize(size);
     ifs.read(&doc[0], size);
-    // 解析文档
-    XMLDocument node;
-    node.Parse(doc.c_str(), size);
-    WebPage web_page(node.FirstChildElement("doc"), new_id);
-    web_page.processDoc();
     // 计算文档指纹
     uint64_t u64 = 0;
-    simhasher.make(web_page.getDocContent(), TOP_N, u64);
+    simhasher.make(doc, TOP_N, u64);
     // 去重
     auto check_it = simhashFigure.begin();
     for (; check_it != simhashFigure.end(); ++check_it) {
@@ -64,12 +59,12 @@ void PageLibPreprocessor::cutRedundantPage() {
         break;
       }
     }
+    // 如果没有找到相同的文档指纹，则将其保存到新的网页库和网页偏移库中
     if (check_it == simhashFigure.end()) {
-      simhashFigure[new_id] = u64;
-      web_page.dump(ofs_page);
-      ofs_offset << new_id << " " << new_offset << " " << size << '\n';
+      simhashFigure[doc_id] = u64;
+      ofs_page << doc;
+      ofs_offset << doc_id << " " << new_offset << " " << size << '\n';
       new_offset += size;
-      ++new_id;
     }
   }
   ofs_offset.close();
