@@ -80,7 +80,7 @@ class WebPage {
 
  private:
   XMLElement* _doc;     // 整篇文档，包含xml在内
-  int _docId;           // 文档id
+  size_t _docId;        // 文档id
   string _docTitle;     // 文档标题
   string _docUrl;       // 文档URL
   string _docContent;   // 文档内容
