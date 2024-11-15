@@ -26,7 +26,6 @@ class PageLibPreprocessor {
 
  private:
   void readOldOffsetLib();
-  void getSimhashFigure(unordered_map<size_t, uint64_t>& simhashLib);
 
  private:
   unordered_map<size_t, pair<off_t, size_t>> _offsetLib;  // 去重网页偏移库
