@@ -35,12 +35,16 @@ class WebPage {
    * @brief 获取文档大小
    */
   size_t getDocSize() const { return _docSize; }
+  /**
+   * @brief 获取文档内容
+   */
+  string getDocContent() const { return _docContent; }
 
   /**
    * @brief 格式化文档进行处理
    */
-
   void processDoc();
+
   /**
    * @brief 获取文档的词频统计map
    */
@@ -84,5 +88,10 @@ class WebPage {
   string _docContent;   // 文档内容
   size_t _docSize = 0;  // 文档大小
 };
+
+/**
+ * @brief 去除头尾空格、制表符、回车、换行符
+ */
+void trim(string& str);
 
 #endif  //_WEBPAGE_H

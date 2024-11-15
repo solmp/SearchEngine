@@ -13,6 +13,12 @@ static unordered_map<string, char32_t> htmlEntities = {
 WebPage::WebPage(XMLElement *item, size_t doc_id)
     : _doc(item), _docId(doc_id) {}
 
+// 去除头尾空格
+void trim(string &str) {
+  str.erase(0, str.find_first_not_of(" \t\n\r"));
+  str.erase(str.find_last_not_of(" \t\n\r") + 1);
+}
+
 void WebPage::processDoc() {
   string description = "";
   string contentEncoded = "";
@@ -37,13 +43,20 @@ void WebPage::processDoc() {
   if (node != nullptr) {
     content = node->GetText();
   }
+
   _docContent = contentEncoded.empty() ? content : contentEncoded;
   if (_docContent.empty()) {
     _docContent = description;
   }
+
   regex tagRegex("<[^>]*>");
   _docContent = regex_replace(_docContent, tagRegex, "");
   // _docContent = decodeHtmlEntities(_docContent); // 解码 HTML 实体
+
+  // 去除头尾空白字符
+  trim(_docTitle);
+  trim(_docUrl);
+  trim(_docContent);
 }
 
 string WebPage::decodeHtmlEntities(const string &input) {
@@ -105,7 +118,7 @@ string WebPage::decodeHtmlEntities(const string &input) {
   return output;
 }
 
-void WebPage::dump(ofstream& ofs) {
+void WebPage::dump(ofstream &ofs) {
   if (_docTitle.empty() || _docUrl.empty() || _docContent.empty()) {
     return;
   }
@@ -133,7 +146,7 @@ void WebPage::dump(ofstream& ofs) {
   // 将文档保存到文件
   tinyxml2::XMLPrinter printer;
   document.Print(&printer);
-  _docSize = printer.CStrSize();
+  _docSize = printer.CStrSize() - 1;
   ofs << printer.CStr();
 }
 

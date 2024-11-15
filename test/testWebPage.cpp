@@ -26,7 +26,7 @@ int main() {
   )";
   XMLDocument doc;
   doc.Parse(xml_text.c_str());
-  XMLElement *node = doc.FirstChildElement("item");
+  XMLElement* node = doc.FirstChildElement("item");
   fprintf(stderr, "node: %s\n", node->Name());
   WebPage page(node, 0);
   page.processDoc();
@@ -34,5 +34,20 @@ int main() {
   page.dump(ofs);
   ofs.close();
   fprintf(stderr, "page_size: %ld\n", page.getDocSize());
+
+  ifstream ifs("page.xml");
+  ifs.seekg(0, std::ios::beg);
+  string doc_read;
+  doc_read.resize(page.getDocSize());
+  ifs.read(&doc_read[0], page.getDocSize());
+  fprintf(stderr, "[%s], size: %ld\n", doc_read.c_str(),
+          strlen(doc_read.c_str()));
+
+  XMLDocument node_read;
+  node_read.Parse(doc_read.c_str(), page.getDocSize());
+  XMLElement* item_read = node_read.FirstChildElement("doc");
+  WebPage page_read(item_read, page.getDocId());
+  page_read.processDoc();
+  fprintf(stderr, "title: %s\n", page_read.getTile().c_str());
   return 0;
 }
