@@ -64,7 +64,7 @@ class DictProducer {
   vector<string> _files;                             // 语料文件路径
   vector<pair<string, int>> _dict;                   // 词典
   unordered_map<string, unordered_set<int>> _index;  // 字符位置索引
-  unique_ptr<SplitTool> _cuttor;                     // 分词工具
+  SplitTool* _cuttor;                                // 分词工具
 };
 
 #endif  //_DICTPRODUCER_H

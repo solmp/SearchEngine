@@ -15,7 +15,8 @@ int main() {
   Configuration::getInstance()->LoadConfig(config_path);
   json split_tool_config = Configuration::getInstance()->getConfigMap(SPLIT_TOOL);
 
-  DictProducer dictProducer(corpus_path, new SplitToolCppJieba(split_tool_config));
+  SplitTool* tool =  new SplitToolCppJieba(split_tool_config);
+  DictProducer dictProducer(corpus_path, tool);
   dictProducer.buildDict(stop_words);  // 创建词典
   dictProducer.createIndex();          // 创建字符位置索引
   dictProducer.store(dict_path, charIndex_path);  // 存储词典和字符位置索引
