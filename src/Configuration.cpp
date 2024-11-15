@@ -39,8 +39,8 @@ ConfigCategory Configuration::chooseCategory(const string& category) {
     return SPLIT_TOOL;
   } else if (category == "ASSETS") {
     return ASSETS;
-  } else if (category == "SAVE") {
-    return SAVE;
+  } else if (category == "DATA") {
+    return DATA;
   }
   return OTHER;
 }

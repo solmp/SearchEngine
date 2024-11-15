@@ -103,9 +103,9 @@ void DictProducer::createIndex() {
 }
 
 void DictProducer::store(Configuration* config) {
-  json& save_config = config->getConfigMap(SAVE);
+  json& data_config = config->getConfigMap(DATA);
   // 存储词典
-  ofstream ofs(save_config["DICT_PATH"]);
+  ofstream ofs(data_config["DICT_PATH"]);
   if (!ofs) {
     throw std::runtime_error("ofstream open file error!");
   }
@@ -115,7 +115,7 @@ void DictProducer::store(Configuration* config) {
   ofs.close();
 
   // 存储字符位置索引
-  ofs.open(save_config["CHAR_INDEX_PATH"]);
+  ofs.open(data_config["CHAR_INDEX_PATH"]);
   if (!ofs) {
     throw std::runtime_error("ofstream open file error!");
   }

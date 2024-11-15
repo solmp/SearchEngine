@@ -12,7 +12,7 @@ void PageLib::create() {
   // 遍历语料库中的每一个xml网页文件
   off_t offset = 0;
   size_t doc_id = 0;
-  const string page_lib_path = _config->getConfigMap(SAVE)["PAGE_LIB_PATH"];
+  const string page_lib_path = _config->getConfigMap(DATA)["PAGE_LIB_PATH"];
 
   // 打开输出文件
   ofstream ofs(page_lib_path);
@@ -53,7 +53,7 @@ void PageLib::create() {
 
 void PageLib::store() {
   // 将偏移库写入文件
-  string page_offset_path = _config->getConfigMap(SAVE)["PAGE_OFFSET_PATH"];
+  string page_offset_path = _config->getConfigMap(DATA)["PAGE_OFFSET_PATH"];
   ofstream ofs(page_offset_path);
   for (auto &p : _offsetLib) {
     ofs << p.first << " " << p.second.first << " " << p.second.second << '\n';
