@@ -1,7 +1,4 @@
-#include <iostream>
-
 #include "../include/SplitToolCppJieba.h"
-using std::cout;
 
 int main() {
   string str = R"(他来到了网易杭研大厦, I am a student
@@ -22,8 +19,8 @@ int main() {
   vector<string> words;
   splitToolCppJieba.cut(str, words);
   for (auto word : words) {
-    cout << word << '/';
+    fprintf(stdout, "%s|", word.c_str());
   }
-  cout << '\n';
+  fprintf(stdout, "\n");
   return 0;
 }

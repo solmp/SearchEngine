@@ -7,14 +7,12 @@
 
 #include <regex>
 #include <set>
-#include <unordered_map>
 
 #include "SplitToolCppJieba.h"
 #include "tinyxml2.h"
 using std::ofstream;
 using std::pair;
 using std::regex;
-using std::unordered_map;
 
 using std::set;
 using tinyxml2::XMLDocument;

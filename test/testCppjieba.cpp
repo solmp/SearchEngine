@@ -1,6 +1,10 @@
 #include "cppjieba/Jieba.hpp"
 
-using namespace std;
+using std::cout;
+using std::endl;
+using std::pair;
+using std::string;
+using std::vector;
 
 const char* const DICT_PATH = "../include/cppjieba/dict/jieba.dict.utf8";
 const char* const HMM_PATH = "../include/cppjieba/dict/hmm_model.utf8";

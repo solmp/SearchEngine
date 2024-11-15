@@ -5,7 +5,7 @@ int main() {
   DirScanner dir_scanner;
   dir_scanner.traversePath("../asset");
   for (const string& file : dir_scanner.getFiles()) {
-    std::cout << file << '\n';
+    fprintf(stdout, "file: %s\n", file.c_str());
   }
   return 0;
 }

@@ -31,6 +31,7 @@ list(APPEND PUBLIC_SRC_FILE
     "${CMAKE_SOURCE_DIR}/src/DirScanner.cpp"
     "${CMAKE_SOURCE_DIR}/src/tinyxml2.cpp"
     "${CMAKE_SOURCE_DIR}/src/WebPage.cpp"
+    "${CMAKE_SOURCE_DIR}/src/SplitToolCppJieba.cpp"
 )
 add_library(PUBLIC_LIB STATIC ${PUBLIC_SRC_FILE})
 

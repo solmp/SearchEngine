@@ -1,24 +1,13 @@
 /**
- *  候选词推荐离线模块
+ *  @brief 候选词推荐离线模块
  */
 
 #ifndef _DICTPRODUCER_H
 #define _DICTPRODUCER_H
-#include <filesystem>
-#include <fstream>
-#include <memory>
-#include <unordered_map>
-#include <unordered_set>
-
 #include "SplitToolCppJieba.h"
-#include "DirScanner.h"
 
-using std::ifstream;
 using std::ofstream;
 using std::pair;
-using std::unique_ptr;
-using std::unordered_map;
-using std::unordered_set;
 class DictProducer {
  public:
   /**
@@ -45,20 +34,6 @@ class DictProducer {
    * @param charIndex_path  字符位置索引存储路径
    */
   void store(const string& dict_path, const string& charIndex_path);
-  /**
-   * @brief 获取停用词集合
-   * @param stop_words_path  停用词所在文件/文件夹路径
-   * @param files 文件路径集合
-   */
-  static void LoadStopWords(const string& stop_words_path,
-                            unordered_set<string>& stop_words);
-
- private:
-  /**
-   * @brief 计算字符所占字节数
-   * @param ch 字符
-   */
-  size_t nBytesCode(const char ch);
 
  private:
   vector<string> _files;                             // 语料文件路径

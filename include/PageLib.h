@@ -6,7 +6,6 @@
 #ifndef _PAGELIB_H
 #define _PAGELIB_H
 
-#include "DirScanner.h"
 #include "WebPage.h"
 
 class PageLib {
