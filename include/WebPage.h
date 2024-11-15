@@ -32,11 +32,7 @@ class WebPage {
   /**
    * @brief 获取文档标题
    */
-  string getTile() const { return _docTitle; };
-  /**
-   * @brief 获取文档摘要
-   */
-  string getSummary(const vector<string>& queryWords) { return _docSummary; }
+  string getTile() const { return _docTitle; }
   /**
    * @brief 获取文档大小
    */
@@ -66,7 +62,7 @@ class WebPage {
    * @brief 判断两篇文档是否相等
    */
   //   friend bool operator==(const WebPage& lhs, const WebPage& rhs);
-  
+
   /**
    * @brief 重载<运算符, 用于set容器排序
    * @param lhs: 左操作数
@@ -92,7 +88,6 @@ class WebPage {
   int _docId;          // 文档id
   string _docTitle;    // 文档标题
   string _docUrl;      // 文档URL
-  string _docSummary;  // 文档摘要
   string _docContent;  // 文档内容
   size_t _docSize;     // 文档大小
 };

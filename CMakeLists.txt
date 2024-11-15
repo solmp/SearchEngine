@@ -26,18 +26,28 @@ file(GLOB TEST_FILES "${CMAKE_SOURCE_DIR}/test/*.cpp")
 # 创建测试
 enable_testing()
 # 针对每个测试文件创建单独的可执行程序和测试
-list(APPEND public_src_file
-    "src/Configuration.cpp"
-    "src/DirScanner.cpp"
-    "src/tinyxml2.cpp")
+list(APPEND PUBLIC_SRC_FILE
+    "${CMAKE_SOURCE_DIR}/src/Configuration.cpp"
+    "${CMAKE_SOURCE_DIR}/src/DirScanner.cpp"
+    "${CMAKE_SOURCE_DIR}/src/tinyxml2.cpp"
+    "${CMAKE_SOURCE_DIR}/src/WebPage.cpp"
+)
+add_library(PUBLIC_LIB STATIC ${PUBLIC_SRC_FILE})
+
 foreach(test_file ${TEST_FILES})
     get_filename_component(test_name ${test_file} NAME_WE)
     string(REGEX REPLACE "test/test(.*).cpp" "src/\\1.cpp" src_file ${test_file})
     if(EXISTS ${src_file})
-        add_executable(${test_name} ${test_file} ${src_file} ${public_src_file})
+        list(FIND PUBLIC_SRC_FILE "${src_file}" is_exist)
+        if(${is_exist} EQUAL -1)
+            add_executable(${test_name} ${test_file} ${src_file})
+        else()
+            add_executable(${test_name} ${test_file})
+        endif()
     else()
-        add_executable(${test_name} ${test_file} ${public_src_file})
+        add_executable(${test_name} ${test_file})
     endif()
+    target_link_libraries(${test_name} PUBLIC_LIB)
     add_test(NAME ${test_name} COMMAND ${test_name})
 endforeach()
 

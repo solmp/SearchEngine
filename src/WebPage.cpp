@@ -14,6 +14,9 @@ WebPage::WebPage(XMLElement *item, size_t doc_id)
     : _doc(item), _docId(doc_id) {}
 
 void WebPage::processDoc() {
+  string description = "";
+  string contentEncoded = "";
+  string content = "";
   XMLElement *node = _doc->FirstChildElement("title");
   if (node != nullptr) {
     _docTitle = node->GetText();
@@ -24,13 +27,22 @@ void WebPage::processDoc() {
   }
   node = _doc->FirstChildElement("description");
   if (node != nullptr) {
-    _docSummary = node->GetText();
-    stripHtmlTags(_docSummary);
+    description = node->GetText();
+    stripHtmlTags(description);
   }
   node = _doc->FirstChildElement("content:encoded");
   if (node != nullptr) {
-    _docContent = node->GetText();
-    stripHtmlTags(_docContent);
+    contentEncoded = node->GetText();
+    stripHtmlTags(contentEncoded);
+  }
+  node = _doc->FirstChildElement("content");
+  if (node != nullptr) {
+    content = node->GetText();
+    stripHtmlTags(content);
+  }
+  _docContent = contentEncoded.empty() ? content : contentEncoded;
+  if (_docContent.empty()) {
+    _docContent = description;
   }
   fprintf(stderr, "title: %s\n", _docTitle.c_str());
   // cout << "link: " << _rss[i].link << endl;
@@ -104,6 +116,10 @@ string WebPage::decodeHtmlEntities(const string &input) {
 }
 
 void WebPage::dump(const string &savePath) {
+  if (_docTitle.empty() || _docUrl.empty() || _docContent.empty()) {
+    fprintf(stderr, "incomplete document, title: [%s]\n", _docTitle.c_str());
+    return;
+  }
   XMLDocument document;
   XMLElement *doc = document.NewElement("doc");
   document.InsertEndChild(doc);
@@ -111,30 +127,26 @@ void WebPage::dump(const string &savePath) {
   XMLElement *docid = document.NewElement("docid");
   XMLElement *title = document.NewElement("title");
   XMLElement *link = document.NewElement("link");
-  XMLElement *description = document.NewElement("description");
   XMLElement *content = document.NewElement("content");
   doc->InsertEndChild(docid);
   doc->InsertEndChild(title);
   doc->InsertEndChild(link);
-  doc->InsertEndChild(description);
   doc->InsertEndChild(content);
 
   docid->SetText(_docId);
   title->SetText(_docTitle.c_str());
   link->SetText(_docUrl.c_str());
 
-  XMLText *description_text = document.NewText(_docSummary.c_str());
-  description_text->SetCData(true);
-  description->InsertEndChild(description_text);
-
   XMLText *content_text = document.NewText(_docContent.c_str());
   content_text->SetCData(true);
   content->InsertEndChild(content_text);
 
+  // 将文档保存到文件末尾
   FILE *fp = fopen(savePath.c_str(), "a");
   tinyxml2::XMLPrinter printer(fp);
   document.Print(&printer);
   _docSize = printer.CStrSize();
+  fclose(fp);
 }
 
 bool operator<(const WebPage &lhs, const WebPage &rhs) {
