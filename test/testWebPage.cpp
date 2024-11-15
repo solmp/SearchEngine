@@ -31,5 +31,6 @@ int main() {
   WebPage page(node, 0);
   page.processDoc();
   page.dump("page.xml");
+  fprintf(stderr, "page_size: %ld\n", page.getDocSize());
   return 0;
 }

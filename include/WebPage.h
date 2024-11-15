@@ -84,12 +84,12 @@ class WebPage {
   string decodeHtmlEntities(const string& input);
 
  private:
-  XMLElement* _doc;    // 整篇文档，包含xml在内
-  int _docId;          // 文档id
-  string _docTitle;    // 文档标题
-  string _docUrl;      // 文档URL
-  string _docContent;  // 文档内容
-  size_t _docSize;     // 文档大小
+  XMLElement* _doc;     // 整篇文档，包含xml在内
+  int _docId;           // 文档id
+  string _docTitle;     // 文档标题
+  string _docUrl;       // 文档URL
+  string _docContent;   // 文档内容
+  size_t _docSize = 0;  // 文档大小
 };
 
 #endif  //_WEBPAGE_H

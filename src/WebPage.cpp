@@ -44,7 +44,7 @@ void WebPage::processDoc() {
   if (_docContent.empty()) {
     _docContent = description;
   }
-  fprintf(stderr, "title: %s\n", _docTitle.c_str());
+  // fprintf(stderr, "title: %s\n", _docTitle.c_str());
   // cout << "link: " << _rss[i].link << endl;
   // cout << "description: " << _rss[i].description << endl;
   // cout << "content: " << _rss[i].content << endl;
@@ -117,7 +117,6 @@ string WebPage::decodeHtmlEntities(const string &input) {
 
 void WebPage::dump(const string &savePath) {
   if (_docTitle.empty() || _docUrl.empty() || _docContent.empty()) {
-    fprintf(stderr, "incomplete document, title: [%s]\n", _docTitle.c_str());
     return;
   }
   XMLDocument document;
@@ -142,10 +141,11 @@ void WebPage::dump(const string &savePath) {
   content->InsertEndChild(content_text);
 
   // 将文档保存到文件末尾
-  FILE *fp = fopen(savePath.c_str(), "a");
-  tinyxml2::XMLPrinter printer(fp);
+  tinyxml2::XMLPrinter printer;
   document.Print(&printer);
   _docSize = printer.CStrSize();
+  FILE *fp = fopen(savePath.c_str(), "a");
+  fprintf(fp, "%s", printer.CStr());
   fclose(fp);
 }
 
