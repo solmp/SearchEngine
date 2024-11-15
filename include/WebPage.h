@@ -54,9 +54,9 @@ class WebPage {
 
   /**
    * @brief 将文档写入文件
-   * @param savePath: 保存路径
+   * @param ofs: 文件输出流
    */
-  void dump(const string& savePath);
+  void dump(ofstream& ofs);
 
   /**
    * @brief 判断两篇文档是否相等
@@ -72,11 +72,6 @@ class WebPage {
   friend bool operator<(const WebPage& lhs, const WebPage& rhs);
 
  private:
-  /**
-   * @brief 去除 HTML 标签
-   * @param html: 待处理的html字符串
-   */
-  void stripHtmlTags(string& html);
   /**
    * @brief 解码 HTML 实体
    * @param input: 待处理的字符串

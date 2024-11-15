@@ -30,7 +30,9 @@ int main() {
   fprintf(stderr, "node: %s\n", node->Name());
   WebPage page(node, 0);
   page.processDoc();
-  page.dump("page.xml");
+  ofstream ofs("page.xml");
+  page.dump(ofs);
+  ofs.close();
   fprintf(stderr, "page_size: %ld\n", page.getDocSize());
   return 0;
 }

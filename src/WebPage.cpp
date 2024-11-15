@@ -28,32 +28,22 @@ void WebPage::processDoc() {
   node = _doc->FirstChildElement("description");
   if (node != nullptr) {
     description = node->GetText();
-    stripHtmlTags(description);
   }
   node = _doc->FirstChildElement("content:encoded");
   if (node != nullptr) {
     contentEncoded = node->GetText();
-    stripHtmlTags(contentEncoded);
   }
   node = _doc->FirstChildElement("content");
   if (node != nullptr) {
     content = node->GetText();
-    stripHtmlTags(content);
   }
   _docContent = contentEncoded.empty() ? content : contentEncoded;
   if (_docContent.empty()) {
     _docContent = description;
   }
-  // fprintf(stderr, "title: %s\n", _docTitle.c_str());
-  // cout << "link: " << _rss[i].link << endl;
-  // cout << "description: " << _rss[i].description << endl;
-  // cout << "content: " << _rss[i].content << endl;
-}
-
-void WebPage::stripHtmlTags(string &html) {
   regex tagRegex("<[^>]*>");
-  html = regex_replace(html, tagRegex, "");
-  html = decodeHtmlEntities(html);
+  _docContent = regex_replace(_docContent, tagRegex, "");
+  // _docContent = decodeHtmlEntities(_docContent); // 解码 HTML 实体
 }
 
 string WebPage::decodeHtmlEntities(const string &input) {
@@ -115,7 +105,7 @@ string WebPage::decodeHtmlEntities(const string &input) {
   return output;
 }
 
-void WebPage::dump(const string &savePath) {
+void WebPage::dump(ofstream& ofs) {
   if (_docTitle.empty() || _docUrl.empty() || _docContent.empty()) {
     return;
   }
@@ -140,13 +130,11 @@ void WebPage::dump(const string &savePath) {
   content_text->SetCData(true);
   content->InsertEndChild(content_text);
 
-  // 将文档保存到文件末尾
+  // 将文档保存到文件
   tinyxml2::XMLPrinter printer;
   document.Print(&printer);
   _docSize = printer.CStrSize();
-  FILE *fp = fopen(savePath.c_str(), "a");
-  fprintf(fp, "%s", printer.CStr());
-  fclose(fp);
+  ofs << printer.CStr();
 }
 
 bool operator<(const WebPage &lhs, const WebPage &rhs) {
