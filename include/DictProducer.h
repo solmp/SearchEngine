@@ -1,5 +1,6 @@
 /**
  *  @brief 候选词推荐离线模块
+ *  @note 读取语料库，生成词典和字符位置索引并保存
  */
 
 #ifndef _DICTPRODUCER_H
