@@ -9,7 +9,7 @@
 #include <string>
 #include <unordered_map>
 
-#include "Noncopyable.h"
+#include "NonCopyable.h"
 #include "nlohmann/json.hpp"
 
 using nlohmann::json;
@@ -24,7 +24,7 @@ enum ConfigCategory {
   OTHER            // 其他配置
 };
 
-class Configuration : Noncopyable {
+class Configuration : NonCopyable {
  public:
   /**
    * @brief 获取单例对象

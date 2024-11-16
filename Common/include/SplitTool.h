@@ -8,11 +8,11 @@
 #include <string>
 #include <vector>
 
-#include "Noncopyable.h"
+#include "NonCopyable.h"
 
 using std::string;
 using std::vector;
-class SplitTool : Noncopyable {
+class SplitTool : NonCopyable {
  public:
   /**
    * @brief 对输入的字符串进行分词
