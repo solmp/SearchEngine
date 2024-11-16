@@ -74,7 +74,8 @@ void PageLibPreprocessor::cutRedundantPage() {
   fprintf(stderr, "simhash_size: %ld\n", simhashFigure.size());
 }
 
-void PageLibPreprocessor::bulidInvertIndexMap() {
+void PageLibPreprocessor::bulidInvertIndexMap(
+    unordered_set<string>& stop_words) {
   // 读取去重网页偏移库
   string page_offset_path =
       _conf->getConfigMap(DATA)["UNIQUE_PAGE_OFFSET_PATH"];
@@ -107,6 +108,9 @@ void PageLibPreprocessor::bulidInvertIndexMap() {
     }
     // 保存到DFTF
     for (auto& word : wordFreq) {
+      if (stop_words.find(word.first) != stop_words.end()) {
+        continue;
+      }
       DFTF[word.first].emplace_back(std::make_pair(doc_id, word.second));
     }
     ++N;

@@ -31,8 +31,9 @@ class PageLibPreprocessor {
 
   /**
    * @brief 生成倒排索引
+   * @param stop_words: 停用词集合
    */
-  void bulidInvertIndexMap();
+  void bulidInvertIndexMap(unordered_set<string>& stop_words);
 
   /**
    * @brief 保存倒排索引到磁盘
