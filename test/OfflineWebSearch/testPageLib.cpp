@@ -1,4 +1,4 @@
-#include "../include/PageLib.h"
+#include "PageLib.h"
 
 int main() {
   Configuration* config = Configuration::getInstance();

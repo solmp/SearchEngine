@@ -1,4 +1,4 @@
-#include "../include/Configuration.h"
+#include "Configuration.h"
 
 int main() {
   Configuration::getInstance()->LoadConfig("../conf/config.json");

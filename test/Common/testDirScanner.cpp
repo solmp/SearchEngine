@@ -1,6 +1,7 @@
 #include <iostream>
 
-#include "../include/DirScanner.h"
+#include "DirScanner.h"
+
 int main() {
   DirScanner dir_scanner;
   dir_scanner.traversePath("../asset");

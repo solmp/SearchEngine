@@ -1,0 +1,49 @@
+# 设置测试运行路径
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../build)
+
+# 为每个模块添加测试
+include_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/../3rdparty/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../Common/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../OfflineKeyRecommend/
+    ${CMAKE_CURRENT_SOURCE_DIR}/../OfflineWebSearch/
+)
+
+# 3rdparty
+file(GLOB TEST_3RDPART_SRC "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/test*.cpp")
+foreach(test_file ${TEST_3RDPART_SRC})
+    get_filename_component(test_name ${test_file} NAME_WE)
+    add_executable(${test_name} ${test_file})
+    add_test(NAME ${test_name} COMMAND ${test_name} WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+endforeach()
+
+# Common
+file(GLOB TEST_COMMON_SRC "${CMAKE_CURRENT_SOURCE_DIR}/Common/test*.cpp")
+
+foreach(test_file ${TEST_COMMON_SRC})
+    get_filename_component(test_name ${test_file} NAME_WE)
+    add_executable(${test_name} ${test_file})
+    target_link_libraries(${test_name} PRIVATE common)
+    add_test(NAME ${test_name} COMMAND ${test_name} WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+endforeach()
+
+# OfflineKeyRecommend
+file(GLOB TEST_OFFLINE_KEY_RECOMMEND_SRC "${CMAKE_CURRENT_SOURCE_DIR}/OfflineKeyRecommend/test*.cpp")
+
+foreach(test_file ${TEST_OFFLINE_KEY_RECOMMEND_SRC})
+    get_filename_component(test_name ${test_file} NAME_WE)
+    add_executable(${test_name} ${test_file})
+    target_link_libraries(${test_name} PRIVATE offline_key_recommend common)
+    add_test(NAME ${test_name} COMMAND ${test_name} WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+endforeach()
+
+# OfflineWebSearch
+file(GLOB TEST_OFFLINE_WEB_SEARCH_SRC "${CMAKE_CURRENT_SOURCE_DIR}/OfflineWebSearch/test*.cpp")
+
+foreach(test_file ${TEST_OFFLINE_WEB_SEARCH_SRC})
+    get_filename_component(test_name ${test_file} NAME_WE)
+    add_executable(${test_name} ${test_file})
+    target_link_libraries(${test_name} PRIVATE offline_web_search common)
+    add_test(NAME ${test_name} COMMAND ${test_name} WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+endforeach()
+

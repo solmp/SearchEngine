@@ -1,6 +1,11 @@
-#include "../include/DictProducer.h"
+#include <filesystem>
+#include <iostream>
 
-int main() {
+#include "DictProducer.h"
+int main(int argc, char** argv) {
+  std::filesystem::path currentPath = std::filesystem::current_path();
+  std::cout << "当前路径: " << currentPath << std::endl;
+
   Configuration* config = Configuration::getInstance();
   config->LoadConfig("../conf/config.json");
 

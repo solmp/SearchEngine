@@ -6,11 +6,11 @@
 #define _CONFIGURATION_H
 
 #include <fstream>
-#include <nlohmann/json.hpp>
 #include <string>
 #include <unordered_map>
 
 #include "Noncopyable.h"
+#include "nlohmann/json.hpp"
 
 using nlohmann::json;
 using std::ifstream;

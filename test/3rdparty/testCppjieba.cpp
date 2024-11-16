@@ -6,13 +6,17 @@ using std::pair;
 using std::string;
 using std::vector;
 
-const char* const DICT_PATH = "../include/3rdparty/cppjieba/dict/jieba.dict.utf8";
-const char* const HMM_PATH = "../include/3rdparty/cppjieba/dict/hmm_model.utf8";
-const char* const USER_DICT_PATH = "../include/3rdparty/cppjieba/dict/user.dict.utf8";
-const char* const IDF_PATH = "../include/3rdparty/cppjieba/dict/idf.utf8";
-const char* const STOP_WORD_PATH = "../include/3rdparty/cppjieba/dict/stop_words.utf8";
+const char* const DICT_PATH = "../3rdparty/include/cppjieba/dict/jieba.dict.utf8";
+const char* const HMM_PATH = "../3rdparty/include/cppjieba/dict/hmm_model.utf8";
+const char* const USER_DICT_PATH = "../3rdparty/include/cppjieba/dict/user.dict.utf8";
+const char* const IDF_PATH = "../3rdparty/include/cppjieba/dict/idf.utf8";
+const char* const STOP_WORD_PATH = "../3rdparty/include/cppjieba/dict/stop_words.utf8";
 
+#include <filesystem>
+#include <iostream>
 int main(int argc, char** argv) {
+  std::filesystem::path currentPath = std::filesystem::current_path();
+  std::cout << "当前路径: " << currentPath << std::endl;
   cppjieba::Jieba jieba(DICT_PATH, HMM_PATH, USER_DICT_PATH, IDF_PATH,
                         STOP_WORD_PATH);
   vector<string> words;

@@ -9,12 +9,15 @@ using std::pair;
 using std::string;
 using std::vector;
 
+const char* const DICT_PATH = "../3rdparty/include/cppjieba/dict/jieba.dict.utf8";
+const char* const HMM_PATH = "../3rdparty/include/cppjieba/dict/hmm_model.utf8";
+const char* const USER_DICT_PATH = "../3rdparty/include/cppjieba/dict/user.dict.utf8";
+const char* const IDF_PATH = "../3rdparty/include/cppjieba/dict/idf.utf8";
+const char* const STOP_WORD_PATH = "../3rdparty/include/cppjieba/dict/stop_words.utf8";
+
 int main(int argc, char** argv) {
-  Simhasher simhasher("../include/3rdparty/cppjieba/dict/jieba.dict.utf8",
-                      "../include/3rdparty/cppjieba/dict/hmm_model.utf8",
-                      "../include/3rdparty/cppjieba/dict/user.dict.utf8",
-                      "../include/3rdparty/cppjieba/dict/idf.utf8",
-                      "../include/3rdparty/cppjieba/dict/stop_words.utf8");
+  Simhasher simhasher(DICT_PATH, HMM_PATH, USER_DICT_PATH, IDF_PATH,
+                      STOP_WORD_PATH);
   string s(
       "我是蓝翔技工拖拉机学院手扶拖拉机专业的。不用多久，我就会升职加薪，当上总"
       "经理，出任CEO，走上人生巅峰。");

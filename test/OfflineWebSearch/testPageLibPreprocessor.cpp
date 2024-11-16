@@ -1,4 +1,4 @@
-#include "../include/PageLibPreprocessor.h"
+#include "PageLibPreprocessor.h"
 
 int main() {
   Configuration* config = Configuration::getInstance();
