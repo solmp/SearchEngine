@@ -10,12 +10,13 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -g")
 
 # 包含头文件目录
 include_directories(${CMAKE_SOURCE_DIR}/include)
+include_directories(${CMAKE_SOURCE_DIR}/include/3rdparty)
 
 # 源文件列表
 # file(GLOB SRC_FILES "${CMAKE_SOURCE_DIR}/src/*.cpp")
 
 # 测试源文件列表
-file(GLOB TEST_FILES "${CMAKE_SOURCE_DIR}/test/*.cpp")
+file(GLOB TEST_FILES "${CMAKE_SOURCE_DIR}/test/*.cpp" "${CMAKE_SOURCE_DIR}/test/3rdparty/*.cpp")
 
 # 创建可执行文件
 # add_executable(YourExecutableName ${SRC_FILES})
@@ -27,12 +28,13 @@ file(GLOB TEST_FILES "${CMAKE_SOURCE_DIR}/test/*.cpp")
 enable_testing()
 # 针对每个测试文件创建单独的可执行程序和测试
 list(APPEND PUBLIC_SRC_FILE
+    "${CMAKE_SOURCE_DIR}/src/3rdparty/tinyxml2.cpp"
     "${CMAKE_SOURCE_DIR}/src/Configuration.cpp"
     "${CMAKE_SOURCE_DIR}/src/DirScanner.cpp"
-    "${CMAKE_SOURCE_DIR}/src/tinyxml2.cpp"
     "${CMAKE_SOURCE_DIR}/src/WebPage.cpp"
     "${CMAKE_SOURCE_DIR}/src/SplitToolCppJieba.cpp"
 )
+
 add_library(PUBLIC_LIB STATIC ${PUBLIC_SRC_FILE})
 
 foreach(test_file ${TEST_FILES})

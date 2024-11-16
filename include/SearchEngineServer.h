@@ -1,5 +1,5 @@
 /**
- * Project SearchEngine
+ * @brief 在线部分整体框架（Reactor框架）
  */
 
 #ifndef _SEARCHENGINESERVER_H

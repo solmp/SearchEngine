@@ -10,11 +10,11 @@ using std::string;
 using std::vector;
 
 int main(int argc, char** argv) {
-  Simhasher simhasher("../include/cppjieba/dict/jieba.dict.utf8",
-                      "../include/cppjieba/dict/hmm_model.utf8",
-                      "../include/cppjieba/dict/user.dict.utf8",
-                      "../include/cppjieba/dict/idf.utf8",
-                      "../include/cppjieba/dict/stop_words.utf8");
+  Simhasher simhasher("../include/3rdparty/cppjieba/dict/jieba.dict.utf8",
+                      "../include/3rdparty/cppjieba/dict/hmm_model.utf8",
+                      "../include/3rdparty/cppjieba/dict/user.dict.utf8",
+                      "../include/3rdparty/cppjieba/dict/idf.utf8",
+                      "../include/3rdparty/cppjieba/dict/stop_words.utf8");
   string s(
       "我是蓝翔技工拖拉机学院手扶拖拉机专业的。不用多久，我就会升职加薪，当上总"
       "经理，出任CEO，走上人生巅峰。");
