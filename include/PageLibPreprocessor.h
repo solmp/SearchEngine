@@ -1,5 +1,6 @@
 /**
- * @brief 预处理网页库
+ * @brief 网页搜索离线模块，用于预处理网页库
+ * @note 读取网页库和网页偏移库，去重后生成去重网页库、去重网页偏移库、倒排索引并保存
  */
 
 #ifndef _PAGELIBPREPROCESSOR_H
@@ -12,7 +13,6 @@
 
 using simhash::Simhasher;
 using std::pair;
-using std::unordered_map;
 
 #define TOP_N 5  // 关键词个数
 class PageLibPreprocessor {
@@ -25,24 +25,30 @@ class PageLibPreprocessor {
   PageLibPreprocessor(Configuration* config, SplitTool* tool);
 
   /**
-   * @brief 去重网页，生成去重网页库和去重网页偏移库
+   * @brief 去重网页，生成去重网页库和去重网页偏移库，并保存到磁盘
    */
   void cutRedundantPage();
 
+  /**
+   * @brief 生成倒排索引
+   */
   void bulidInvertIndexMap();
 
+  /**
+   * @brief 保存倒排索引到磁盘
+   */
   void storeOnDisk();
 
  private:
   /**
-   * @brief 读取未去重的网页偏移库
+   * @brief 读取网页偏移库
    */
-  void readOldOffsetLib();
+  void readOldOffsetLib(const string& page_offset_path);
 
  private:
-  unordered_map<size_t, pair<off_t, size_t>> _offsetLib;  // 去重网页偏移库
+  unordered_map<size_t, pair<off_t, size_t>> _offsetLib;  // 网页偏移库
   // 倒排索引<单词，<文档编号，权重>>
-  unordered_map<string, pair<size_t, double>> _invertIndexLib;
+  unordered_map<string, vector<pair<size_t, double>>> _invertIndexLib;
   Configuration* _conf;    // 配置文件
   SplitTool* _wordCutter;  // 分词工具
 };

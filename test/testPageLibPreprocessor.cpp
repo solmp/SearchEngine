@@ -7,5 +7,7 @@ int main() {
   SplitTool* tool = new SplitToolCppJieba(split_tool_conf);
   PageLibPreprocessor plp(config, tool);
   plp.cutRedundantPage();
+  plp.bulidInvertIndexMap();
+  plp.storeOnDisk();
   return 0;
 }
