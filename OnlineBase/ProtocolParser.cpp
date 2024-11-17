@@ -74,3 +74,14 @@ int ProtocolParser::on_message_complete(llhttp_t* parser) {
   _http.message_end_time = time(nullptr);
   return 0;
 }
+
+string generateHttpResponse(const string& body) {
+  string response;
+  response = "HTTP/1.1 200 OK\r\n";
+  response += "Server: nginx\r\n";
+  response += "content-length: " + std::to_string(body.size()) + "\r\n";
+  response += "\r\n";
+  response += body;
+  response += "\r\n";
+  return move(response);
+}

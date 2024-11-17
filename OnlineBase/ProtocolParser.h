@@ -57,4 +57,11 @@ class ProtocolParser : NonCopyable {
   static http_struct _http;            // http 结构体
 };
 
+/**
+ * @brief 生成http响应
+ * @param body 响应体
+ * @return 响应报文
+ */
+string generateHttpResponse(const string& body);
+
 #endif  //_PROTOCOLPARSER_H
