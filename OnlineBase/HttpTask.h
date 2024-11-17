@@ -30,6 +30,9 @@ class HttpTask {
     parser.doParse(_msg);                       // 解析http请求
     http_struct http_req = parser.getResult();  // 获取解析结果
     http_req.print();                           // 打印http请求
+    // TODO：1.关键词推荐结果
+    // TODO：2.网页搜索结果
+    // body：json 格式
     string resp =
         "HTTP/1.1 200 OK\r\n"
         "Server: nginx\r\n"

@@ -5,6 +5,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../build)
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/../3rdparty/include
     ${CMAKE_CURRENT_SOURCE_DIR}/../Common/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../OnlineBase/
     ${CMAKE_CURRENT_SOURCE_DIR}/../OfflineKeyRecommend/
     ${CMAKE_CURRENT_SOURCE_DIR}/../OfflineWebSearch/
     ${CMAKE_CURRENT_SOURCE_DIR}/../SearchEngineServer/
@@ -46,12 +47,30 @@ foreach(test_file ${TEST_OFFLINE_WEB_SEARCH_SRC})
     add_test(NAME ${test_name} COMMAND ${test_name} WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 endforeach()
 
+# OnlineBase
+file(GLOB TEST_ONLINE_BASE_SRC "${CMAKE_CURRENT_SOURCE_DIR}/OnlineBase/test*.cpp")
+foreach(test_file ${TEST_ONLINE_BASE_SRC})
+    get_filename_component(test_name ${test_file} NAME_WE)
+    add_executable(${test_name} ${test_file})
+    target_link_libraries(${test_name} PRIVATE online_base common)
+    add_test(NAME ${test_name} COMMAND ${test_name} WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+endforeach()
+
 # SearchEngineServer
 file(GLOB TEST_SEARCH_ENGINE_SERVER_SRC "${CMAKE_CURRENT_SOURCE_DIR}/SearchEngineServer/test*.cpp")
 foreach(test_file ${TEST_SEARCH_ENGINE_SERVER_SRC})
     get_filename_component(test_name ${test_file} NAME_WE)
     add_executable(${test_name} ${test_file})
-    target_link_libraries(${test_name} PRIVATE search_engine_server common)
+    target_link_libraries(${test_name} PRIVATE search_engine_server online_base common)
+    add_test(NAME ${test_name} COMMAND ${test_name} WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+endforeach()
+
+# OnlineKeyRecommend
+file(GLOB TEST_ONLINE_KEY_RECOMMEND_SRC "${CMAKE_CURRENT_SOURCE_DIR}/OnlineKeyRecommend/test*.cpp")
+foreach(test_file ${TEST_ONLINE_KEY_RECOMMEND_SRC})
+    get_filename_component(test_name ${test_file} NAME_WE)
+    add_executable(${test_name} ${test_file})
+    target_link_libraries(${test_name} PRIVATE online_key_recommend online_base common)
     add_test(NAME ${test_name} COMMAND ${test_name} WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 endforeach()
 
