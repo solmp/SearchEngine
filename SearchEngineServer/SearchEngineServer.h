@@ -5,6 +5,7 @@
 #define _ECHO_SERVER_H
 
 #include "KeyRecommandTask.h"
+#include "WebPageSearchTask.h"
 #include "TcpServer.h"
 #include "ThreadPool.h"
 

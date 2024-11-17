@@ -64,3 +64,8 @@ int editDistance(const std::string &lhs, const std::string &rhs) {
   }
   return editDist[lhs_len][rhs_len];
 }
+
+void trim(string &str) {
+  str.erase(0, str.find_first_not_of(" \t\n\r"));
+  str.erase(str.find_last_not_of(" \t\n\r") + 1);
+}

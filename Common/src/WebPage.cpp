@@ -13,12 +13,6 @@ static unordered_map<string, char32_t> htmlEntities = {
 WebPage::WebPage(XMLElement *item, size_t doc_id)
     : _doc(item), _docId(doc_id) {}
 
-// 去除头尾空格
-void trim(string &str) {
-  str.erase(0, str.find_first_not_of(" \t\n\r"));
-  str.erase(str.find_last_not_of(" \t\n\r") + 1);
-}
-
 void WebPage::processDoc() {
   string description = "";
   string contentEncoded = "";
@@ -57,6 +51,16 @@ void WebPage::processDoc() {
   trim(_docTitle);
   trim(_docUrl);
   trim(_docContent);
+}
+
+json WebPage::toJson() {
+  json json_body = {
+      {"docid", _docId},
+      {"title", _docTitle},
+      {"link", _docUrl},
+      {"content", _docContent},
+  };
+  return json_body;
 }
 
 string WebPage::decodeHtmlEntities(const string &input) {

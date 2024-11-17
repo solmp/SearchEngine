@@ -44,6 +44,10 @@ class WebPage {
    * @brief 格式化文档进行处理
    */
   void processDoc();
+  /**
+   * @brief 将文档转换为json格式
+   */
+  json toJson();
 
   /**
    * @brief 获取文档的词频统计map

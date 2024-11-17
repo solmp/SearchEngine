@@ -9,6 +9,11 @@
 #include "ProtocolParser.h"
 #include "TcpConnection.h"
 
+enum TaskType {
+  KEY_RECOMMAND = 0,   // 关键词推荐
+  WEB_PAGE_SEARCH = 1  // 网页搜索
+};
+
 class HttpTask {
  public:
   /**

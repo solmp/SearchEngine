@@ -33,3 +33,9 @@ int triple_min(const int &a, const int &b, const int &c);
  * @param rhs 字符串2
  */
 int editDistance(const std::string &lhs, const std::string &rhs);
+
+/**
+ * @brief 去除字符串前后的空格
+ * @param str 字符串
+ */
+void trim(string &str);
