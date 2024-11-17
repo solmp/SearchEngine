@@ -6,6 +6,8 @@
 int main(void) {
   Configuration* config = Configuration::getInstance();
   config->LoadConfig("../conf/config.json");
+  Dictionary* dict = Dictionary::getInstance();
+  dict->LoadDictionary(config);
   json& server_conf = config->getConfigMap(SERVER);
   string ip = server_conf["HOST"];
   unsigned short port = server_conf["PORT"];

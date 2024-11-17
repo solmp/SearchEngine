@@ -25,7 +25,6 @@ void KeyRecommander::doQuery() {
   }
 }
 
-// TODO： 待测
 void KeyRecommander::response() {
   // 将候选词结果包装为json格式返回给客户端
   size_t size = _candidateResultQue.size() < KEY_RECOMMAND_NUM
@@ -41,6 +40,5 @@ void KeyRecommander::response() {
     json_body["result"].push_back(candidate._word);
   }
   string response = generateHttpResponse(json_body.dump());
-  fprintf(stderr, "%s\n", response.c_str());
-  // _conn->sendToLoop(std::bind(&TcpConnection::sendMsg, _conn, oss.str()));
+  _conn->sendToLoop(std::bind(&TcpConnection::sendMsg, _conn, response));
 }

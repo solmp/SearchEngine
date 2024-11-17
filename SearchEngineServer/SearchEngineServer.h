@@ -4,8 +4,7 @@
 #ifndef _ECHO_SERVER_H
 #define _ECHO_SERVER_H
 
-#include "ProtocolParser.h"
-#include "HttpTask.h"
+#include "KeyRecommandTask.h"
 #include "TcpServer.h"
 #include "ThreadPool.h"
 

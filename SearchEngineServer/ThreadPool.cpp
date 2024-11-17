@@ -36,10 +36,10 @@ void ThreadPool::doTask() {
   while (_alive || !_que.empty()) {
     ElemType task = getTask();
     if (task != nullptr) {
-      cout << std::this_thread::get_id() << " ";
+      std::cout << std::this_thread::get_id() << " ";
       task();
     } else {
-      cout << "Task is nullptr" << endl;
+      std::cout << "Task is nullptr\n";
     }
   }
 }
