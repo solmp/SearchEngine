@@ -34,4 +34,7 @@ target_include_directories(nlohmann_json INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/i
 add_library(simhash INTERFACE)
 target_include_directories(simhash INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-
+# llhttp
+file(GLOB llhttp_src "${CMAKE_CURRENT_SOURCE_DIR}/src/llhttp/*.c")
+add_library(llhttp STATIC ${llhttp_src})
+target_include_directories(llhttp PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
