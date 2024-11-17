@@ -7,6 +7,7 @@
 
 #include <unordered_set>
 
+#include "CommonTool.h"
 #include "Configuration.h"
 #include "DirScanner.h"
 #include "SplitTool.h"
@@ -36,11 +37,5 @@ class SplitToolCppJieba : public SplitTool {
  */
 void LoadStopWords(const string& stop_words_path,
                    unordered_set<string>& stop_words);
-
-/**
- * @brief 计算字符所占字节数
- * @param ch 字符
- */
-size_t nBytesCode(const char ch);
 
 #endif  //_SPLITTOOLCPPJIEBA_H

@@ -20,18 +20,3 @@ void LoadStopWords(const string& stop_words_path,
     ifs.close();
   }
 }
-
-size_t nBytesCode(const char ch) {
-  if (ch & (1 << 7)) {
-    int nBytes = 1;
-    for (int i = 0; i < 6; ++i) {
-      if (ch & (1 << (6 - i))) {
-        ++nBytes;
-      } else {
-        break;
-      }
-    }
-    return nBytes;
-  }
-  return 1;
-}
