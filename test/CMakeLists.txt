@@ -7,6 +7,7 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/../Common/include
     ${CMAKE_CURRENT_SOURCE_DIR}/../OfflineKeyRecommend/
     ${CMAKE_CURRENT_SOURCE_DIR}/../OfflineWebSearch/
+    ${CMAKE_CURRENT_SOURCE_DIR}/../SearchEngineServer/
 )
 
 # 3rdparty
@@ -20,7 +21,6 @@ endforeach()
 
 # Common
 file(GLOB TEST_COMMON_SRC "${CMAKE_CURRENT_SOURCE_DIR}/Common/test*.cpp")
-
 foreach(test_file ${TEST_COMMON_SRC})
     get_filename_component(test_name ${test_file} NAME_WE)
     add_executable(${test_name} ${test_file})
@@ -30,7 +30,6 @@ endforeach()
 
 # OfflineKeyRecommend
 file(GLOB TEST_OFFLINE_KEY_RECOMMEND_SRC "${CMAKE_CURRENT_SOURCE_DIR}/OfflineKeyRecommend/test*.cpp")
-
 foreach(test_file ${TEST_OFFLINE_KEY_RECOMMEND_SRC})
     get_filename_component(test_name ${test_file} NAME_WE)
     add_executable(${test_name} ${test_file})
@@ -40,11 +39,19 @@ endforeach()
 
 # OfflineWebSearch
 file(GLOB TEST_OFFLINE_WEB_SEARCH_SRC "${CMAKE_CURRENT_SOURCE_DIR}/OfflineWebSearch/test*.cpp")
-
 foreach(test_file ${TEST_OFFLINE_WEB_SEARCH_SRC})
     get_filename_component(test_name ${test_file} NAME_WE)
     add_executable(${test_name} ${test_file})
     target_link_libraries(${test_name} PRIVATE offline_web_search common)
+    add_test(NAME ${test_name} COMMAND ${test_name} WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+endforeach()
+
+# SearchEngineServer
+file(GLOB TEST_SEARCH_ENGINE_SERVER_SRC "${CMAKE_CURRENT_SOURCE_DIR}/SearchEngineServer/test*.cpp")
+foreach(test_file ${TEST_SEARCH_ENGINE_SERVER_SRC})
+    get_filename_component(test_name ${test_file} NAME_WE)
+    add_executable(${test_name} ${test_file})
+    target_link_libraries(${test_name} PRIVATE search_engine_server common)
     add_test(NAME ${test_name} COMMAND ${test_name} WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 endforeach()
 
