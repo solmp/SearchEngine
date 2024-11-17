@@ -1,9 +1,9 @@
 #include "SearchEngineServer.h"
 
-SearchEngineServer::SearchEngineServer(const char* ip, unsigned short port)
+SearchEngineServer::SearchEngineServer(const string& ip, unsigned short port)
     : _server(ip, port) {}
 
-SearchEngineServer::SearchEngineServer(const char* ip, unsigned short port, int threadNum,
+SearchEngineServer::SearchEngineServer(const string& ip, unsigned short port, int threadNum,
                        int queueSize)
     : _pool(threadNum, queueSize), _server(ip, port) {}
 

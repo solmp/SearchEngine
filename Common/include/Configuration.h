@@ -18,10 +18,11 @@ using std::string;
 using std::unordered_map;
 
 enum ConfigCategory {
-  SPLIT_TOOL = 0,  // 分词工具相关路径
-  ASSETS,          // 资源文件
-  DATA,            // 持久化相关
-  OTHER            // 其他配置
+  SERVER = 0,  // 服务器相关配置
+  SPLIT_TOOL,  // 分词工具相关路径
+  ASSETS,      // 资源文件
+  DATA,        // 持久化相关
+  OTHER        // 其他配置
 };
 
 class Configuration : NonCopyable {

@@ -14,14 +14,14 @@ class SearchEngineServer {
    * @param ip 服务器ip地址
    * @param port 服务器端口号
    */
-  SearchEngineServer(const char* ip, unsigned short port);
+  SearchEngineServer(const string& ip, unsigned short port);
   /**
    * @param ip 服务器ip地址
    * @param port 服务器端口号
    * @param threadNum 线程数量
    * @param queueSize 任务队列大小
    */
-  SearchEngineServer(const char* ip, unsigned short port, int threadNum,
+  SearchEngineServer(const string& ip, unsigned short port, int threadNum,
                      int queueSize);
   ~SearchEngineServer();
   // 启动搜索引擎服务器

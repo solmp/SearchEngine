@@ -16,9 +16,9 @@ void EventLoop::loop() {
           dealResult();
         }
       } else if (ev.data.fd == STDIN_FILENO) {
-        // 输入CTRL+D退出, 这里至少读取2个字节
-        char buf[2] = {0};  
-        if (fgets(buf, 2, stdin) == nullptr) {
+        string line;
+        if (std::getline(std::cin, line), std::cin.eof()) {
+          fprintf(stdout, "Reached EOF (Ctrl + D). Exiting the event loop.\n");
           unloop();
         }
       } else if (ev.events & EPOLLIN) {
