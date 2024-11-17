@@ -3,9 +3,9 @@
 #include "EventLoop.h"
 
 string TcpConnection::readMsg() {
-  char buf[1024] = {};
-  _sockIO.recvLine(buf, 1024);
-  return string(buf);
+  char buf[MAX_BUF_SIZE] = {};
+  _sockIO.recvVarMsg(buf, MAX_BUF_SIZE);
+  return buf;
 }
 
 void TcpConnection::sendMsg(const string& msg) {

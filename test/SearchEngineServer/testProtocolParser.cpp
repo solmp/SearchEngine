@@ -17,9 +17,12 @@ int main() {
       "\r\n";
 
   ProtocolParser parser;
-  parser.doParse(request, strlen(request)); // 解析请求
-  parser.print();
-  parser.doParse(reponse, strlen(reponse)); // 解析响应
-  parser.print();
+  parser.doParse(request);  // 解析请求
+  http_struct http_req = parser.getResult();
+  http_req.print();
+
+  parser.doParse(reponse);  // 解析响应
+  http_struct http_resp = parser.getResult();
+  http_resp.print();
   return 0;
 }

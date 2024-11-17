@@ -9,7 +9,7 @@
 #include <mutex>
 #include <queue>
 
-#include "Task.h"
+#include "HttpTask.h"
 using std::condition_variable;
 using std::function;
 using std::mutex;

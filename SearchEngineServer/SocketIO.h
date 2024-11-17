@@ -17,6 +17,7 @@ class SocketIO : NonCopyable {
    */
   explicit SocketIO(int fd) : _fd(fd) {}
   ~SocketIO() { close(_fd); }
+
   /**
    * @brief 接收n个字节
    * @param buf 数据缓冲区
@@ -29,6 +30,13 @@ class SocketIO : NonCopyable {
    * @param len 最大接收字节数
    */
   size_t recvLine(char* buf, size_t len);
+  /**
+   * @brief 接收变长消息
+   * @param buf 数据缓冲区
+   * @param max_len 最大接收字节数
+   * @param flag 接收标志
+   */
+  size_t recvVarMsg(char* buf, size_t max_len, int flag = 0);
   /**
    * @brief 发送n个字节
    * @param buf 数据缓冲区

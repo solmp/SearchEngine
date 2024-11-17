@@ -28,11 +28,11 @@ void SearchEngineServer::OnNewConnection(const TcpConnectionPtr& conn) {
 }
 
 void SearchEngineServer::OnMessage(const TcpConnectionPtr& conn) {
-  // TODO：接收http请求
-  string msg = conn->readMsg(); 
-  // TODO：创建请求对应的任务
-  Task task(conn, msg);
-  _pool.addTask(std::bind(&Task::process, task));
+  // 接收http请求
+  string msg = move(conn->readMsg()); 
+  // 创建请求对应的任务
+  HttpTask task(conn, msg);
+  _pool.addTask(std::bind(&HttpTask::process, task));
 }
 
 void SearchEngineServer::OnClose(const TcpConnectionPtr& conn) {

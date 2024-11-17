@@ -55,6 +55,10 @@ size_t SocketIO::recvLine(char* buf, size_t len) {
   return len - left - 1;
 }
 
+size_t SocketIO::recvVarMsg(char* buf, size_t max_len, int flag) {
+  return recv(_fd, buf, max_len, flag);
+}
+
 size_t SocketIO::sendn(const char* buf, size_t len) {
   size_t left = len;
   const char* p = buf;

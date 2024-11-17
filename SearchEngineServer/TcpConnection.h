@@ -22,6 +22,7 @@ using TcpConnectionPtr = shared_ptr<TcpConnection>;
 using TcpConnectCallback = function<void(const TcpConnectionPtr&)>;
 using FuncPtr = function<void()>;
 
+#define MAX_BUF_SIZE 4096
 /**
  * @note 继承std::enable_shared_from_this，用于在回调函数中使用shared_ptr
  */
