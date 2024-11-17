@@ -5,9 +5,10 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../build)
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/../3rdparty/include
     ${CMAKE_CURRENT_SOURCE_DIR}/../Common/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/../OnlineBase/
     ${CMAKE_CURRENT_SOURCE_DIR}/../OfflineKeyRecommend/
     ${CMAKE_CURRENT_SOURCE_DIR}/../OfflineWebSearch/
+    ${CMAKE_CURRENT_SOURCE_DIR}/../OnlineBase/
+    ${CMAKE_CURRENT_SOURCE_DIR}/../OnlineKeyRecommend/
     ${CMAKE_CURRENT_SOURCE_DIR}/../SearchEngineServer/
 )
 
