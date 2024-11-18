@@ -3,5 +3,6 @@ build
 .ycm_extra_conf.py
 asset
 data/*
-
+node_modules
+package-lock.json
 
