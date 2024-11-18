@@ -4,7 +4,7 @@ int main() {
   Configuration::getInstance()->LoadConfig("../conf/config.json");
   WebPageQuery* p = WebPageQuery::getInstance();
   vector<size_t> webPages;
-  p->doQuery("test", webPages);
+  p->doQuery("前期工作", webPages);
   for (auto& webPage : webPages) {
     WebPage page = p->getWebPage(webPage);
     fprintf(stdout, "doc_id: %ld\n", webPage);
