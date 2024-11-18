@@ -1,8 +1,8 @@
 #include "WebPageSearcher.h"
 
 void WebPageSearcher::doQuery() {
-  // TODO
-  // 传入搜索关键词，和结果变量，调用WebPageQuery类的doQuery方法，获取搜索结果
+  WebPageQuery* webPageQuery = WebPageQuery::getInstance();
+  webPageQuery->doQuery(_sought, _webPages);
 }
 
 void WebPageSearcher::response() {

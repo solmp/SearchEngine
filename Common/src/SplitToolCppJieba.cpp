@@ -1,5 +1,27 @@
 #include "SplitToolCppJieba.h"
 
+SplitToolCppJieba* SplitToolCppJieba::pInstance = nullptr;
+
+SplitToolCppJieba::SplitToolCppJieba(json& config)
+    : _jieba(config["DICT_PATH"], config["HMM_PATH"], config["USER_DICT_PATH"],
+             config["IDF_PATH"], config["STOP_WORD_PATH"]) {}
+
+SplitToolCppJieba* SplitToolCppJieba::getInstance() {
+  if (pInstance == nullptr) {
+    atexit(destroy);
+    json& config = Configuration::getInstance()->getConfigMap(SPLIT_TOOL);
+    pInstance = new SplitToolCppJieba(config);
+  }
+  return pInstance;
+}
+
+void SplitToolCppJieba::destroy() {
+  if (pInstance) {
+    delete pInstance;
+    pInstance = nullptr;
+  }
+}
+
 void LoadStopWords(const string& stop_words_path,
                    unordered_set<string>& stop_words) {
   DirScanner dir_scanner;

@@ -20,6 +20,9 @@ class SplitTool : NonCopyable {
    * @param words 保存分词结果
    */
   virtual void cut(const string& str, vector<string>& words) = 0;
+
+ protected:
+  virtual ~SplitTool() = default;
 };
 
 #endif  //_SPLITTOOL_H

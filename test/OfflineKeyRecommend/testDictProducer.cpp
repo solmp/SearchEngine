@@ -9,7 +9,7 @@ int main(int argc, char** argv) {
   Configuration* config = Configuration::getInstance();
   config->LoadConfig("../conf/config.json");
 
-  SplitTool* tool = new SplitToolCppJieba(config->getConfigMap(SPLIT_TOOL));
+  SplitTool* tool = SplitToolCppJieba::getInstance();
   unordered_set<string> stop_words;  // 停用词集合
 
   // 加载停用词

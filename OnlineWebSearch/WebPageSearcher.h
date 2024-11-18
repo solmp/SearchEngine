@@ -9,7 +9,7 @@
 
 #include "ProtocolParser.h"
 #include "TcpConnection.h"
-#include "WebPage.h"
+#include "WebPageQuery.h"
 
 using std::string;
 
