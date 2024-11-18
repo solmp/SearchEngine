@@ -132,7 +132,7 @@ void WebPageQuery::doQuery(const string& key, vector<size_t>& _webPages) {
       if (_invertIndexLib.find(word) == _invertIndexLib.end()) {
         continue;
       }
-      sim += doc_w[word] * _invertIndexLib[word][doc_id].second;
+      sim += doc_w[word] * intersection[doc_id];
       w_quadratic_sum += doc_w[word] * doc_w[word];
     }
     sim /= sqrt(w_quadratic_sum);
