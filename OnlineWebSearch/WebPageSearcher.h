@@ -7,8 +7,8 @@
 
 #include <string>
 
+#include "CacheManager.h"
 #include "ProtocolParser.h"
-#include "RedisServer.h"
 #include "TcpConnection.h"
 #include "WebPageQuery.h"
 

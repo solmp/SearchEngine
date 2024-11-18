@@ -16,19 +16,20 @@ class WebPageSearchTask : public HttpTask {
    */
   WebPageSearchTask(TcpConnectionPtr conn, const string& msg)
       : HttpTask(std::move(conn), std::move(msg)) {}
+
   void process() override {
-    {
-      RedisServer* redisServer = RedisServer::getInstance();  // 获取Redis服务器
-      string res;                                             // 查询结果
-      if (redisServer->query(_msg, res)) {                    // 查询缓存
-        _conn->sendToLoop(std::bind(&TcpConnection::sendMsg, _conn,
-                                    generateHttpResponse(res)));
-        return;
-      }
-      WebPageSearcher webPageSearcher(_msg, _conn);  // 创建网页搜索器
-      webPageSearcher.doQuery();                     // 查询网页
-      webPageSearcher.response();                    // 返回查询结果
+    // 获取缓存管理器
+    CacheManager* cacheManager = CacheManager::getInstance();
+    string res;
+    if (cacheManager->queryPublicCache(_msg, res)) {
+      _conn->sendToLoop(
+          std::bind(&TcpConnection::sendMsg, _conn, generateHttpResponse(res)));
+      return;
     }
+    // 缓存未命中，进行查询
+    WebPageSearcher webPageSearcher(_msg, _conn);  // 创建网页搜索器
+    webPageSearcher.doQuery();                     // 查询网页
+    webPageSearcher.response();                    // 返回查询结果
   }
 };
 

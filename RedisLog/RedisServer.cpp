@@ -21,7 +21,7 @@ void RedisServer::destroy() {
   }
 }
 
-void RedisServer::set(const string& key, const std::string& value) {
+void RedisServer::addRecord(const string& key, const std::string& value) {
   _redis.hset(redisDbName, key, value);
 }
 

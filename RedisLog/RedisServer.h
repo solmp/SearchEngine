@@ -18,14 +18,10 @@ class RedisServer : NonCopyable {
   static RedisServer* getInstance();
   /**
    * @brief 设置Redis缓存
-   * @param key 键
-   * @param value 值
    */
-  void set(const string& key, const std::string& value);
+  void addRecord(const string& key, const std::string& value);
   /**
    * @brief 查询Redis缓存
-   * @param key 键
-   * @param value 值
    */
   bool query(const string& key, std::string& value);
 

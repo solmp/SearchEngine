@@ -3,6 +3,7 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/
     ${CMAKE_CURRENT_SOURCE_DIR}/../Common/include
     ${CMAKE_CURRENT_SOURCE_DIR}/../3rdparty/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../RedisLog/
     ${CMAKE_CURRENT_SOURCE_DIR}/../LRULog/
 )
 

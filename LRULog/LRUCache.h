@@ -32,18 +32,15 @@ class LRUCache {
   LRUCache(int capacity = 5) : _capacity(capacity) {}
   /**
    * @brief 获取记录
-   * @param key 键
    */
-  json getRecord(string key);
+  bool getRecord(const string& key, string& value);
   /**
    * @brief 添加记录
-   * @param key 键
-   * @param value 值
    */
-  void addRecord(string key, json value);
+  void addRecord(const string& key, const string& value);
   // void update(const LRUCache& cache);
-  // void load();
-  // void store();
+  void load();
+  void store();
 
  private:
   // 判满
@@ -51,10 +48,9 @@ class LRUCache {
 
  private:
   size_t _capacity;
-  list<std::pair<string, json>> _resultList;  // 记录缓存
+  list<std::pair<string, string>> _resultList;  // 记录缓存
   // 记录缓存的迭代器
-  unordered_map<string, list<std::pair<string, json>>::iterator> _hashmap;
-  mutex _mutex;
+  unordered_map<string, list<std::pair<string, string>>::iterator> _hashmap;
 };
 
 #endif  //_LRUCACHE_H

@@ -4,7 +4,7 @@ int main() {
   Configuration::getInstance()->LoadConfig("../conf/config.json");
   auto redis = RedisServer::getInstance();
 
-  redis->set("key1", "val");
+  redis->addRecord("key1", "val");
   std::string val;
   if (redis->query("key1", val)) {
     fprintf(stdout, "key1: %s\n", val.c_str());

@@ -7,6 +7,7 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/../OnlineKeyRecommend/
     ${CMAKE_CURRENT_SOURCE_DIR}/../OnlineWebSearch/
     ${CMAKE_CURRENT_SOURCE_DIR}/../RedisLog/
+    ${CMAKE_CURRENT_SOURCE_DIR}/../LRULog/
 )
 
 # 源文件
