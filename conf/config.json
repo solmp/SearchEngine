@@ -26,6 +26,7 @@
     "PAGE_OFFSET_PATH": "../data/page_offset.dat",
     "UNIQUE_PAGE_LIB_PATH": "../data/unique_page_lib.dat",
     "UNIQUE_PAGE_OFFSET_PATH": "../data/unique_page_offset.dat",
-    "INVERT_INDEX_PATH": "../data/invert_index.dat"
+    "INVERT_INDEX_PATH": "../data/invert_index.dat",
+    "LRU_CACHE": "../data/LRUCache.json"
   }
 }

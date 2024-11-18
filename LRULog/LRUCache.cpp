@@ -1,6 +1,7 @@
 #include "LRUCache.h"
 
 json LRUCache::getRecord(string key) {
+  unique_lock<mutex> ul(_mutex);
   auto it = _hashmap.find(key);
   if (it != _hashmap.end()) {
     _resultList.splice(_resultList.end(), _resultList, it->second);
@@ -10,6 +11,7 @@ json LRUCache::getRecord(string key) {
 }
 
 void LRUCache::addRecord(string key, json value) {
+  unique_lock<mutex> ul(_mutex);
   auto it = _hashmap.find(key);
   if (it != _hashmap.end()) {
     _resultList.splice(_resultList.end(), _resultList, it->second);
@@ -24,6 +26,27 @@ void LRUCache::addRecord(string key, json value) {
   _hashmap[key] = --_resultList.end();
 }
 
-void LRUCache::update(const LRUCache& cache) {}
-void LRUCache::load(string& filename) {}
-void LRUCache::store(string& filename) {}
+// void LRUCache::update(const LRUCache& cache) {
+//   for (auto& it : cache._resultList) {
+//     addRecord(it.first, it.second);
+//   }
+// }
+
+// void LRUCache::load() {
+//   string path =
+//   Configuration::getInstance()->getConfigMap(DATA)["LRU_CACHE"]; ifstream
+//   ifs(path); assert(ifs); json j; ifs >> j; for (auto& it : j.items()) {
+//     addRecord(it.key(), it.value());
+//   }
+//   ifs.close();
+// }
+
+// void LRUCache::store() {
+//   string path =
+//   Configuration::getInstance()->getConfigMap(DATA)["LRU_CACHE"]; ofstream
+//   ofs(path); assert(ofs); json j; for (auto& it : _resultList) {
+//     j[it.first] = it.second;
+//   }
+//   ofs << j.dump(4);
+//   ofs.close();
+// }

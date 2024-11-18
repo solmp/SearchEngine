@@ -13,6 +13,7 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/../SearchEngineServer/
     ${CMAKE_CURRENT_SOURCE_DIR}/../LogBase/
     ${CMAKE_CURRENT_SOURCE_DIR}/../RedisLog/
+    ${CMAKE_CURRENT_SOURCE_DIR}/../LRULog/
 )
 
 # 3rdparty
@@ -96,5 +97,16 @@ foreach(test_file ${TEST_REDIS_LOG_SRC})
     target_link_libraries(${test_name} PRIVATE redis_log redis++ common)
     add_test(NAME ${test_name} COMMAND ${test_name} WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 endforeach()
+
+# LRULog
+file(GLOB TEST_LRU_LOG_SRC "${CMAKE_CURRENT_SOURCE_DIR}/LRULog/test*.cpp")
+foreach(test_file ${TEST_LRU_LOG_SRC})
+    get_filename_component(test_name ${test_file} NAME_WE)
+    add_executable(${test_name} ${test_file})
+    target_link_libraries(${test_name} PRIVATE lru_log common)
+    add_test(NAME ${test_name} COMMAND ${test_name} WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+endforeach()
+
+
 
 
