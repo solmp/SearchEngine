@@ -11,6 +11,8 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/../OnlineKeyRecommend/
     ${CMAKE_CURRENT_SOURCE_DIR}/../OnlineWebSearch/
     ${CMAKE_CURRENT_SOURCE_DIR}/../SearchEngineServer/
+    ${CMAKE_CURRENT_SOURCE_DIR}/../LogBase/
+    ${CMAKE_CURRENT_SOURCE_DIR}/../RedisLog/
 )
 
 # 3rdparty
@@ -85,4 +87,14 @@ foreach(test_file ${TEST_ONLINE_WEB_SEARCH_SRC})
     target_link_libraries(${test_name} PRIVATE online_web_search online_base common)
     add_test(NAME ${test_name} COMMAND ${test_name} WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 endforeach()
+
+# RedisLog
+file(GLOB TEST_REDIS_LOG_SRC "${CMAKE_CURRENT_SOURCE_DIR}/RedisLog/test*.cpp")
+foreach(test_file ${TEST_REDIS_LOG_SRC})
+    get_filename_component(test_name ${test_file} NAME_WE)
+    add_executable(${test_name} ${test_file})
+    target_link_libraries(${test_name} PRIVATE redis_log redis++ common)
+    add_test(NAME ${test_name} COMMAND ${test_name} WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+endforeach()
+
 

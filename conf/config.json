@@ -3,6 +3,9 @@
     "HOST": "127.0.0.1",
     "PORT": 8080
   },
+  "REDIS": {
+    "URI": "tcp://127.0.0.1:6379"
+  },
   "SPLIT_TOOL": {
     "DICT_PATH": "../3rdparty/include/cppjieba/dict/jieba.dict.utf8",
     "HMM_PATH": "../3rdparty/include/cppjieba/dict/hmm_model.utf8",
