@@ -79,9 +79,10 @@ string generateHttpResponse(const string& body) {
   string response;
   response = "HTTP/1.1 200 OK\r\n";
   response += "Server: nginx\r\n";
+  response += "Content-Type: text/html\r\n";
   response += "content-length: " + std::to_string(body.size()) + "\r\n";
   response += "\r\n";
   response += body;
   response += "\r\n";
-  return move(response);
+  return response;
 }

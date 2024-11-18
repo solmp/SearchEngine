@@ -60,6 +60,7 @@ void WebPageQuery::loadInvertIndexLib(const string& invertIndexLibPath) {
 }
 
 void WebPageQuery::doQuery(const string& key, vector<size_t>& _webPages) {
+  _webPages.clear();
   // 句子分词
   vector<string> words;
   _wordCutTool->cut(key, words);
@@ -72,6 +73,9 @@ void WebPageQuery::doQuery(const string& key, vector<size_t>& _webPages) {
     }
   }
   words.swap(tmp);
+  if (words.size() == 0) {
+    return;
+  }
   // 统计词频
   unordered_map<string, size_t> wordFreq;
   for (auto& word : words) {

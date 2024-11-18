@@ -36,8 +36,15 @@ void SearchEngineServer::OnMessage(const TcpConnectionPtr& conn) {
   http_struct http_req = parser.getResult();    // 获取解析结果
   http_req.print();                             // 打印http请求
   json json_body = json::parse(http_req.body);  // 解析json格式的请求体
-  TaskType type = json_body["type"];            // 获取任务类型
-  string data = json_body["data"];              // 获取用户输入内容
+  if (!json_body.contains("type")) {
+    cout << "Invalid request" << endl;
+    string response = generateHttpResponse("Invalid request");
+    conn->sendToLoop(std::bind(&TcpConnection::sendMsg, conn, response));
+    return;
+  }
+  TaskType type = json_body["type"];  // 获取任务类型
+  string data = json_body["data"];    // 获取用户输入内容
+  fprintf(stdout, "type: [%d], data: [%s]\n", type, data.c_str());
   // 创建请求对应的任务
   if (type == KEY_RECOMMAND) {
     KeyRecommandTask task(conn, data);
