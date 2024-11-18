@@ -18,6 +18,13 @@ class WebPageSearchTask : public HttpTask {
       : HttpTask(std::move(conn), std::move(msg)) {}
   void process() override {
     {
+      RedisServer* redisServer = RedisServer::getInstance();  // 获取Redis服务器
+      string res;                                             // 查询结果
+      if (redisServer->query(_msg, res)) {                    // 查询缓存
+        _conn->sendToLoop(std::bind(&TcpConnection::sendMsg, _conn,
+                                    generateHttpResponse(res)));
+        return;
+      }
       WebPageSearcher webPageSearcher(_msg, _conn);  // 创建网页搜索器
       webPageSearcher.doQuery();                     // 查询网页
       webPageSearcher.response();                    // 返回查询结果

@@ -8,6 +8,7 @@
 #include <string>
 
 #include "ProtocolParser.h"
+#include "RedisServer.h"
 #include "TcpConnection.h"
 #include "WebPageQuery.h"
 

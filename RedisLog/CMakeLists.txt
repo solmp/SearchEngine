@@ -3,7 +3,7 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/
     ${CMAKE_CURRENT_SOURCE_DIR}/../Common/include
     ${CMAKE_CURRENT_SOURCE_DIR}/../3rdparty/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/../RedisLog
+    ${CMAKE_CURRENT_SOURCE_DIR}/../RedisLog/
 )
 
 # 源文件
@@ -11,3 +11,4 @@ file(GLOB redis_log_src "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
 
 # 生成静态库
 add_library(redis_log STATIC ${redis_log_src})
+target_link_libraries(redis_log PRIVATE common redis++)

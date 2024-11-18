@@ -17,6 +17,8 @@ void WebPageSearcher::response() {
     WebPage page = WebPageQuery::getInstance()->getWebPage(doc_id);
     json_body["result"].push_back(page.toJson());
   }
+  // 将查询结果存入Redis缓存
+  RedisServer::getInstance()->set(_sought, json_body.dump());
   string response = generateHttpResponse(json_body.dump());
   _conn->sendToLoop(std::bind(&TcpConnection::sendMsg, _conn, response));
 }
