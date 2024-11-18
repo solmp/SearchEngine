@@ -13,19 +13,19 @@
 
 using std::string;
 
-#define WEB_PAGE_SEARCH_NUM 10
-
 class WebPageSearcher {
  public:
   WebPageSearcher(const string& sought, const TcpConnectionPtr& conn)
       : _sought(sought), _conn(conn) {}
+  // 根据传入内容，查询相关网页
   void doQuery();
+  // 将查询结果交给主线程，准备发送响应
   void response();
 
  private:
-  vector<WebPage> _webPages;
-  string _sought;
-  TcpConnectionPtr _conn;
+  vector<size_t> _webPages;  // 查询结果
+  string _sought;            // 查询关键词
+  TcpConnectionPtr _conn;    // Tcp连接
 };
 
 #endif  //_WEBPAGESEARCHER_H
