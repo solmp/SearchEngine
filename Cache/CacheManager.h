@@ -45,8 +45,9 @@ class CacheManager : NonCopyable {
   static CacheManager* _instance;
   // LRU 缓存数组, 每个LRU对应一个线程
   unordered_map<pthread_t, unique_ptr<LRUCache>> _caches;
-  LRUCache _publicCache;  // 公共LRU缓存
-  mutex _mutex;           // 互斥锁
+  unordered_map<pthread_t, mutex> _mutexs;  // 线程互斥锁
+  LRUCache _publicCache;                    // 公共LRU缓存
+  mutex _mutex;                             // 公共互斥锁
 };
 
 #endif  //_CACHEMANAGER_H
