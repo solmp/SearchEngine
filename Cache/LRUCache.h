@@ -48,6 +48,7 @@ class LRUCache {
   list<std::pair<string, string>>& getPending();
   void load();
   void store();
+  size_t size() const { return _hashmap.size(); }
 
  private:
   // 判满

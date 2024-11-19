@@ -47,6 +47,8 @@ void CacheManager::addThreadLRUCache(const pthread_t pid) {
 
 void CacheManager::updateThreadLRUCaches() {
   // 更新主LRU缓存：将线程池中线程的pending缓存合并到主LRU缓存中
+  fprintf(stdout, ">>CacheManager::updateThreadLRUCaches\n");
+  fprintf(stdout, ">>old publicCache size = %lu\n", _publicCache.size());
   for (auto& cache : _caches) {
     list<std::pair<string, string>> pending;
     {
@@ -57,6 +59,7 @@ void CacheManager::updateThreadLRUCaches() {
       _publicCache.addRecord(record.first, record.second);
     }
   }
+  fprintf(stdout, ">>new publicCache size = %lu\n", _publicCache.size());
   // 更新线程LRU缓存
   std::lock_guard<std::mutex> lock(_mutex);
   for (auto& cache : _caches) {

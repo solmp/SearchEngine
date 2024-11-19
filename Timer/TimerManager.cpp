@@ -18,7 +18,9 @@ void TimerManager::stop() {
     it.second->stop();
   }
   for (auto& it : _timerThreads) {
-    it.join();
+    if(it.joinable()) {
+      it.join();
+    }
   }
 }
 
