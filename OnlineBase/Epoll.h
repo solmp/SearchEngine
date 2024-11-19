@@ -4,6 +4,7 @@
 #ifndef _EPOLL_H
 #define _EPOLL_H
 
+#include <string.h>
 #include <sys/epoll.h>
 #include <unistd.h>
 

@@ -8,7 +8,6 @@
 #include <sw/redis++/redis++.h>
 
 #include "Configuration.h"
-#include "NonCopyable.h"
 
 using namespace sw::redis;
 using std::string;

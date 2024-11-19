@@ -1,5 +1,4 @@
 #include "Epoll.h"
-#include <string.h>
 
 void Epoll::addEvent(int fd, EPOLL_EVENTS events) {
   struct epoll_event ev;

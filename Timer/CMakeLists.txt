@@ -1,14 +1,5 @@
-# 包含目录
-include_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}/
-    ${CMAKE_CURRENT_SOURCE_DIR}/../Common/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/../3rdparty/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/../RedisLog/
-    ${CMAKE_CURRENT_SOURCE_DIR}/../LRULog/
-)
-
-# 源文件
+# timer
 file(GLOB timer_src "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
-
-# 生成静态库
 add_library(timer STATIC ${timer_src})
+target_link_libraries(timer PUBLIC cache_manager)
+target_include_directories(timer PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/)

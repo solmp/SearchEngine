@@ -1,7 +1,3 @@
-/**
- * @brief 网页类
- */
-
 #include "WebPage.h"
 
 // HTML 实体编码映射表

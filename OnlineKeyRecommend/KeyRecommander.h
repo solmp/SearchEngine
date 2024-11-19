@@ -8,7 +8,6 @@
 #include <sstream>
 
 #include "Dictionary.h"
-#include "HttpStruct.h"
 #include "ProtocolParser.h"
 #include "TcpConnection.h"
 

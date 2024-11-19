@@ -8,7 +8,6 @@
 #include <memory>
 
 #include "LRUCache.h"
-#include "NonCopyable.h"
 #include "RedisServer.h"
 
 using std::unique_ptr;

@@ -1,12 +1,5 @@
-# 包含目录
-include_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}/
-    ${CMAKE_CURRENT_SOURCE_DIR}/../Common/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/../3rdparty/include
-)
-
-# 源文件
+# offline_web_search
 file(GLOB offline_web_search_src "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
-
-# 生成静态库
 add_library(offline_web_search STATIC ${offline_web_search_src})
+target_link_libraries(offline_web_search PUBLIC simhash common)
+target_include_directories(offline_web_search PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

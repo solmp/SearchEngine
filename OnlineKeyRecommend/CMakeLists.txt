@@ -1,13 +1,5 @@
-# 包含目录
-include_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}/
-    ${CMAKE_CURRENT_SOURCE_DIR}/../Common/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/../3rdparty/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/../OnlineBase/
-)
-
-# 源文件
+# online_key_recommend
 file(GLOB online_key_recommend_src "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
-
-# 生成静态库
 add_library(online_key_recommend STATIC ${online_key_recommend_src})
+target_link_libraries(online_key_recommend PUBLIC online_base)
+target_include_directories(online_key_recommend PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

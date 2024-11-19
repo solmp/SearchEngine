@@ -1,18 +1,5 @@
-# 包含目录
-include_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}/
-    ${CMAKE_CURRENT_SOURCE_DIR}/../Common/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/../3rdparty/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/../OnlineBase/
-    ${CMAKE_CURRENT_SOURCE_DIR}/../OnlineKeyRecommend/
-    ${CMAKE_CURRENT_SOURCE_DIR}/../OnlineWebSearch/
-    ${CMAKE_CURRENT_SOURCE_DIR}/../RedisLog/
-    ${CMAKE_CURRENT_SOURCE_DIR}/../LRULog/
-    ${CMAKE_CURRENT_SOURCE_DIR}/../Timer/
-)
-
-# 源文件
+# search_engine_server
 file(GLOB search_engine_server_src "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
-
-# 生成静态库
 add_library(search_engine_server STATIC ${search_engine_server_src})
+target_link_libraries(search_engine_server PUBLIC online_web_search online_key_recommend)
+target_include_directories(search_engine_server PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

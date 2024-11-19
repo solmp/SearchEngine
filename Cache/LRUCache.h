@@ -13,7 +13,6 @@
 #include <vector>
 
 #include "Configuration.h"
-#include "nlohmann/json.hpp"
 
 using nlohmann::json;
 using std::cin;
