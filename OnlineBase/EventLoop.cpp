@@ -2,6 +2,7 @@
 
 void EventLoop::loop() {
   _isLooping = true;
+  _timer.start();
   while (_isLooping) {
     int nready = _epoll.epollWait();
     for (int i = 0; i < nready; ++i) {

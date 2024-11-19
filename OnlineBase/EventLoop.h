@@ -13,6 +13,7 @@
 #include "Epoll.h"
 #include "EventFd.h"
 #include "TcpConnection.h"
+#include "TimerManager.h"
 
 using std::lock_guard;
 using std::mutex;
@@ -32,7 +33,10 @@ class EventLoop {
   /**
    * @brief 退出事件循环
    */
-  void unloop() { _isLooping = false; }
+  void unloop() {
+    _timer.stop();
+    _isLooping = false;
+  }
   /**
    * @brief 处理新连接
    */
@@ -89,6 +93,7 @@ class EventLoop {
   TcpConnectCallback _onClose;          // 客户端断开连接回调函数
   mutex _mutex;                         // 互斥锁，用于维护_pending
   vector<FuncPtr> _pending;             // 待处理的响应任务
+  TimerManager _timer;                  // 定时器
 };
 
 #endif  //_EVENTLOOP_H
