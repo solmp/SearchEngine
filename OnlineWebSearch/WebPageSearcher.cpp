@@ -19,7 +19,7 @@ void WebPageSearcher::response() {
   }
   string res = json_body.dump();
   // 将查询结果存入缓存
-  CacheManager::getInstance()->addPublicCache(_sought, res);
+  CacheManager::getInstance()->addRecord(_sought, res);
   _conn->sendToLoop(
       std::bind(&TcpConnection::sendMsg, _conn, generateHttpResponse(res)));
 }

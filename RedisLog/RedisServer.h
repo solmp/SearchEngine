@@ -24,6 +24,8 @@ class RedisServer : NonCopyable {
    * @brief 查询Redis缓存
    */
   bool query(const string& key, std::string& value);
+  // 检查redis连接状态
+  bool checkConnect();
 
  private:
   RedisServer();

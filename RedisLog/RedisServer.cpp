@@ -33,3 +33,12 @@ bool RedisServer::query(const string& key, std::string& value) {
   }
   return false;
 }
+
+bool RedisServer::checkConnect() {
+  try {
+    return (_redis.ping() == "PONG");
+  } catch (const Error& e) {
+    fprintf(stdout, "Redis start failed!\n");
+    return false;
+  }
+}

@@ -21,7 +21,7 @@ class WebPageSearchTask : public HttpTask {
     // 获取缓存管理器
     CacheManager* cacheManager = CacheManager::getInstance();
     string res;
-    if (cacheManager->queryPublicCache(_msg, res)) {
+    if (cacheManager->queryRecord(_msg, res)) {
       _conn->sendToLoop(
           std::bind(&TcpConnection::sendMsg, _conn, generateHttpResponse(res)));
       return;

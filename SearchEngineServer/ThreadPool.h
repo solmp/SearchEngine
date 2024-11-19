@@ -7,6 +7,7 @@
 #include <list>
 #include <thread>
 
+#include "CacheManager.h"
 #include "TaskQueue.h"
 
 using std::list;

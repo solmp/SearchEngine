@@ -23,13 +23,24 @@ void LRUCache::addRecord(const string& key, const string& value) {
     _resultList.emplace_back(key, value);
   }
   _hashmap[key] = --_resultList.end();
+  // 加入待更新列表
+  if (_pendingUpdateList.size() >= _capacity) {
+    _pendingUpdateList.pop_front();
+  }
+  _pendingUpdateList.push_back(*_hashmap[key]);
 }
 
-// void LRUCache::update(const LRUCache& cache) {
-//   for (auto& it : cache._resultList) {
-//     addRecord(it.first, it.second);
-//   }
-// }
+list<std::pair<string, string>>& LRUCache::getPending() {
+  return _pendingUpdateList;
+}
+
+void LRUCache::update(const LRUCache& cache) {
+  _resultList = cache._resultList;
+  _hashmap.clear();
+  for (auto it = _resultList.begin(); it != _resultList.end(); ++it) {
+    _hashmap[it->first] = it;
+  }
+}
 
 void LRUCache::load() {
   try {

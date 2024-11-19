@@ -33,6 +33,8 @@ void ThreadPool::addTask(ElemType task) {
 ThreadPool::ElemType ThreadPool::getTask() { return _que.pop(); }
 
 void ThreadPool::doTask() {
+  // 增加线程LRU缓存
+  CacheManager::getInstance()->addThreadLRUCache(pthread_self());
   while (_alive || !_que.empty()) {
     ElemType task = getTask();
     if (task != nullptr) {

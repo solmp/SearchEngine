@@ -5,25 +5,38 @@
 #ifndef _CACHEMANAGER_H
 #define _CACHEMANAGER_H
 
+#include <memory>
+
 #include "LRUCache.h"
 #include "NonCopyable.h"
 #include "RedisServer.h"
 
+using std::unique_ptr;
+
+#define LRU_CACHE_SIZE 5
 class CacheManager : NonCopyable {
  public:
   static CacheManager* getInstance();
   /**
-   * @brief 查询公共缓存
+   * @brief 查询缓存
    */
-  bool queryPublicCache(const string& key, string& value);
+  bool queryRecord(const string& key, string& value);
   /**
-   * @brief 添加公共缓存
+   * @brief 添加缓存
    */
-  void addPublicCache(const string& key, const string& value);
+  void addRecord(const string& key, const string& value);
+  /**
+   * @brief 添加线程LRU缓存
+   * @param tid 线程ID
+   */
+  void addThreadLRUCache(const pthread_t tid);
+  /**
+   * @brief 更新线程LRU缓存
+   */
+  void updateThreadLRUCaches();
 
   // void init(const string& filename);
   // LRUCache& getCache(size_t index);
-  // void updateCache();
 
  private:
   CacheManager();
@@ -31,8 +44,10 @@ class CacheManager : NonCopyable {
 
  private:
   static CacheManager* _instance;
-  vector<LRUCache> _caches;  // 缓存数组, 每个LRU对应线程
-  mutex _mutex;              // 互斥锁
+  // LRU 缓存数组, 每个LRU对应一个线程
+  unordered_map<pthread_t, unique_ptr<LRUCache>> _caches;
+  LRUCache _publicCache;  // 公共LRU缓存
+  mutex _mutex;           // 互斥锁
 };
 
 #endif  //_CACHEMANAGER_H

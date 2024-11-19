@@ -1,13 +1,13 @@
 /**
  * @brief 搜索引擎服务器模块
  */
-#ifndef _ECHO_SERVER_H
-#define _ECHO_SERVER_H
+#ifndef _SEARCH_ENGINE_SERVER_H
+#define _SEARCH_ENGINE_SERVER_H
 
 #include "KeyRecommandTask.h"
-#include "WebPageSearchTask.h"
 #include "TcpServer.h"
 #include "ThreadPool.h"
+#include "WebPageSearchTask.h"
 
 class SearchEngineServer {
  public:
@@ -51,4 +51,4 @@ class SearchEngineServer {
   void OnClose(const TcpConnectionPtr& conn);
 };
 
-#endif  //_ECHO_SERVER_H
+#endif  //_SEARCH_ENGINE_SERVER_H
