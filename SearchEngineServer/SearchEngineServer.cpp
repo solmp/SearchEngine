@@ -24,27 +24,21 @@ void SearchEngineServer::stop() {
 }
 
 void SearchEngineServer::OnNewConnection(const TcpConnectionPtr& conn) {
-  cout << "OnNewConnection" << endl;
+  // fprintf(stdout, "OnNewConnection\n");
 }
 
 void SearchEngineServer::OnMessage(const TcpConnectionPtr& conn) {
   try {
     // 接收并解析http请求
-    string msg = move(conn->readMsg());
-    ProtocolParser parser;                        // 创建解析器
-    parser.doParse(msg);                          // 解析http请求
-    http_struct http_req = parser.getResult();    // 获取解析结果
-    http_req.print();                             // 打印http请求
+    string msg = conn->readMsg();
+    ProtocolParser parser;                      // 创建解析器
+    parser.doParse(msg);                        // 解析http请求
+    http_struct http_req = parser.getResult();  // 获取解析结果
+    // http_req.print();                             // 打印http请求
     json json_body = json::parse(http_req.body);  // 解析json格式的请求体
-    if (!json_body.contains("type")) {
-      cout << "Invalid request" << endl;
-      string response = generateHttpResponse("Invalid request");
-      conn->sendToLoop(std::bind(&TcpConnection::sendMsg, conn, response));
-      return;
-    }
+    assert(json_body.contains("type"));
     TaskType type = json_body["type"];  // 获取任务类型
     string data = json_body["data"];    // 获取用户输入内容
-    fprintf(stdout, "type: [%d], data: [%s]\n", type, data.c_str());
     // 创建请求对应的任务
     if (type == KEY_RECOMMAND) {
       KeyRecommandTask task(conn, data);
@@ -53,11 +47,16 @@ void SearchEngineServer::OnMessage(const TcpConnectionPtr& conn) {
       WebPageSearchTask task(conn, data);
       _pool.addTask(std::bind(&WebPageSearchTask::process, task));
     }
+    return;
   } catch (nlohmann::json::parse_error& e) {
-    fprintf(stderr, "json parse error: %s\n", e.what());
+    // fprintf(stderr, "json parse error\n");
+  } catch (std::exception& e) {
+    // fprintf(stderr, "exception: %s\n", e.what());
   }
+  conn->sendToLoop(std::bind(&TcpConnection::sendMsg, conn,
+                             "HTTP/1.1 400 Bad Request\r\n\r\n"));
 }
 
 void SearchEngineServer::OnClose(const TcpConnectionPtr& conn) {
-  cout << "OnClose" << endl;
+  // fprintf(stdout, "OnClose\n");
 }

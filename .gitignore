@@ -1,8 +1,8 @@
 build
 .vscode
 .ycm_extra_conf.py
-asset
 data/*
+!data/.gitkeep
 node_modules
 package-lock.json
-
+config.json

@@ -76,13 +76,17 @@ int ProtocolParser::on_message_complete(llhttp_t* parser) {
 }
 
 string generateHttpResponse(const string& body) {
-  string response;
-  response = "HTTP/1.1 200 OK\r\n";
-  response += "Server: nginx\r\n";
-  response += "Content-Type: text/html\r\n";
-  response += "content-length: " + std::to_string(body.size()) + "\r\n";
-  response += "\r\n";
-  response += body;
-  response += "\r\n";
-  return response;
+  ostringstream oss;
+  time_t now = time(nullptr);
+  struct tm* gmtNow = gmtime(&now);
+  char buffer[80] = {};
+  strftime(buffer, sizeof(buffer), "%a, %d %b %Y %H:%M:%S GMT", gmtNow);
+  oss << "HTTP/1.1 200 OK\r\n"
+      << "Content-Type: application/json\r\n"
+      << "Content-Length: " << body.size() << "\r\n"
+      << "Server: MyServer\r\n"
+      << "Date: " << buffer << "\r\n"
+      << "\r\n"
+      << body << "\r\n";
+  return oss.str();
 }

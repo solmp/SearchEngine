@@ -43,6 +43,12 @@ class SocketIO : NonCopyable {
    * @param len 发送字节数
    */
   size_t sendn(const char* buf, size_t len);
+  /**
+   * @brief 发送变长消息
+   * @param buf 数据缓冲区
+   * @param len 发送字节数
+   */
+  size_t sendVarMsg(const char* buf, size_t len);
   int fd() const { return _fd; }
 
  private:

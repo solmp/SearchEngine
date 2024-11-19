@@ -14,7 +14,6 @@ int Acceptor::accept() {
   if (peerfd == -1) {
     throw std::runtime_error("accept error");
   }
-  cout << "client connected: " << peerfd << endl;
   return peerfd;
 }
 

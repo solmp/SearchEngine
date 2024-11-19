@@ -10,11 +10,13 @@
 #include <cstring>
 #include <ctime>
 #include <functional>
+#include <sstream>
 
 #include "HttpStruct.h"
 #include "NonCopyable.h"
 
 using std::bind;
+using std::ostringstream;
 
 using namespace std::placeholders;
 

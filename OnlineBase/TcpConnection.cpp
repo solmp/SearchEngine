@@ -9,7 +9,9 @@ string TcpConnection::readMsg() {
 }
 
 void TcpConnection::sendMsg(const string& msg) {
-  _sockIO.sendn(msg.c_str(), msg.size());
+  _sockIO.sendVarMsg(msg.c_str(), msg.size());
+  // 关闭连接，防止客户端一直处于连接状态但不操作
+  _loop->handleClose(_sockIO.fd());
 }
 
 bool TcpConnection::isClosed() {

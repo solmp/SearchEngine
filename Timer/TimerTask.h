@@ -9,7 +9,6 @@
 class TimerTask {
  public:
   void process() {
-    fprintf(stdout, ">>TimerTask is running\n");
     CacheManager::getInstance()->updateThreadLRUCaches();
   }
 };

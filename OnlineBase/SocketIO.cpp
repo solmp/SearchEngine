@@ -76,3 +76,7 @@ size_t SocketIO::sendn(const char* buf, size_t len) {
   }
   return len - left;
 }
+
+size_t SocketIO::sendVarMsg(const char* buf, size_t len) {
+  return send(_fd, buf, len, 0);
+}

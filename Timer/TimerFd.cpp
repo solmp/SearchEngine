@@ -26,9 +26,7 @@ void TimerFd::start() {
       continue;
     } else if (-1 == nready) {
       fprintf(stderr, "poll error\n");
-    } else if (0 == nready) {
-      fprintf(stderr, "poll timeout\n");
-    } else {
+    } else if (0 != nready) {
       if (pfd.revents & POLLIN) {
         handleRead();
       }
