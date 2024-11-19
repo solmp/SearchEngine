@@ -74,6 +74,11 @@
           resultsDiv.innerHTML = '';
 
           if (type === 0) { // 关键词推荐
+            if(result.result.length === 0) {
+              const p = document.createElement('p');
+              p.textContent = '无匹配结果';
+              resultsDiv.appendChild(p);
+            }
             result.result.forEach(keyword => {
               const p = document.createElement('p');
               p.textContent = keyword;
