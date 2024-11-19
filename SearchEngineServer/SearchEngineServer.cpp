@@ -1,11 +1,13 @@
 #include "SearchEngineServer.h"
 
+SearchEngineServer::SearchEngineServer(const string& ip, unsigned short port,
+                                       int threadNum, int queueSize,
+                                       int initSec, int peridocSec)
+    : _pool(threadNum, queueSize),
+      _server(ip, port),
+      _timer(initSec, peridocSec) {}
 SearchEngineServer::SearchEngineServer(const string& ip, unsigned short port)
     : _server(ip, port) {}
-
-SearchEngineServer::SearchEngineServer(const string& ip, unsigned short port,
-                                       int threadNum, int queueSize)
-    : _pool(threadNum, queueSize), _server(ip, port) {}
 
 SearchEngineServer::~SearchEngineServer() { stop(); }
 
@@ -17,11 +19,13 @@ void SearchEngineServer::start() {
       std::bind(&SearchEngineServer::OnMessage, this, std::placeholders::_1),
       std::bind(&SearchEngineServer::OnClose, this, std::placeholders::_1));
   _server.start();
+  _timer.start();
 }
 
 void SearchEngineServer::stop() {
-  _pool.stop();
+  _timer.stop();
   _server.stop();
+  _pool.stop();
 }
 
 void SearchEngineServer::OnNewConnection(const TcpConnectionPtr& conn) {
