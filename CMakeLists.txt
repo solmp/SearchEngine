@@ -22,3 +22,7 @@ add_subdirectory(OnlineWebSearch)
 add_subdirectory(SearchEngineServer)
 
 add_subdirectory(test)
+
+add_executable(SearchEngine SearchEngine.cc)
+target_link_libraries(SearchEngine PRIVATE search_engine_server)
+
