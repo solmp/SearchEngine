@@ -45,16 +45,22 @@ void LRUCache::update(const LRUCache& cache) {
 void LRUCache::load() {
   try {
     string path = Configuration::getInstance()->getConfigMap(DATA)["LRU_CACHE"];
-    ifstream ifs(path);
-    assert(ifs);
-    json j;
-    ifs >> j;
+    ifstream in(path, std::ios::in);
+    if (!in) {
+      fprintf(stderr, "open file %s failed\n", path.c_str());
+      return;
+    }
+    std::istreambuf_iterator<char> beg(in), end;
+    string strdata(beg, end);
+    in.close();
+    json j = json::parse(strdata);
     for (auto& it : j.items()) {
       addRecord(it.key(), it.value());
     }
-    ifs.close();
   } catch (nlohmann::json::parse_error& e) {
     fprintf(stderr, "json parse error: %s\n", e.what());
+  } catch (std::exception& e) {
+    fprintf(stderr, "exception: %s\n", e.what());
   }
 }
 
@@ -62,7 +68,7 @@ void LRUCache::store() {
   string path = Configuration::getInstance()->getConfigMap(DATA)["LRU_CACHE"];
   ofstream ofs(path);
   assert(ofs);
-  json j;
+  json j = json::object();
   for (auto& it : _resultList) {
     j[it.first] = it.second;
   }

@@ -33,9 +33,10 @@ class CacheManager : NonCopyable {
    * @brief 更新线程LRU缓存
    */
   void updateThreadLRUCaches();
-
-  // void init(const string& filename);
-  // LRUCache& getCache(size_t index);
+  /**
+   * @brief 保存公共缓存
+   */
+  void storePublicCache() { _publicCache.store(); };
 
  private:
   CacheManager();

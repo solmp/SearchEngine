@@ -1,6 +1,6 @@
 #include "CacheManager.h"
 
-CacheManager* CacheManager::_instance = getInstance();
+CacheManager* CacheManager::_instance = nullptr;
 
 CacheManager* CacheManager::getInstance() {
   if (_instance == nullptr) {
@@ -10,7 +10,9 @@ CacheManager* CacheManager::getInstance() {
   return _instance;
 }
 
-CacheManager::CacheManager() : _publicCache(LRU_CACHE_SIZE) {}
+CacheManager::CacheManager() : _publicCache(LRU_CACHE_SIZE) {
+  _publicCache.load();
+}
 
 void CacheManager::destroy() {
   if (_instance) {
@@ -20,9 +22,11 @@ void CacheManager::destroy() {
 }
 
 bool CacheManager::queryRecord(const string& key, string& value) {
-  unique_lock<mutex> lock(_mutex);
-  // 1.查询线程LRU缓存
-  if (_caches[pthread_self()]->getRecord(key, value)) return true;
+  {
+    unique_lock<mutex> lock(_mutexs[pthread_self()]);
+    // 1.查询线程LRU缓存
+    if (_caches[pthread_self()]->getRecord(key, value)) return true;
+  }
   // 2.查询Redis缓存
   RedisServer* redis = RedisServer::getInstance();
   if (redis->checkConnect() && redis->query(key, value)) return true;
@@ -30,11 +34,13 @@ bool CacheManager::queryRecord(const string& key, string& value) {
 }
 
 void CacheManager::addRecord(const string& key, const string& value) {
-  unique_lock<mutex> lock(_mutex);
-  // 0.添加公共LRU缓存
-  _publicCache.addRecord(key, value);
-  // 1.添加线程LRU缓存
-  _caches[pthread_self()]->addRecord(key, value);
+  {
+    unique_lock<mutex> lock(_mutexs[pthread_self()]);
+    // // 0.添加公共LRU缓存
+    // _publicCache.addRecord(key, value);
+    // 1.添加线程LRU缓存
+    _caches[pthread_self()]->addRecord(key, value);
+  }
   // 2.添加Redis缓存
   RedisServer* redis = RedisServer::getInstance();
   if (redis->checkConnect()) redis->addRecord(key, value);
@@ -72,6 +78,3 @@ void CacheManager::updateThreadLRUCaches() {
     tmp.swap(_caches_pending[cache.first]);
   }
 }
-
-// void CacheManager::init(const string& filename) {}
-// LRUCache& CacheManager::getCache(size_t index) { return _caches[index]; }

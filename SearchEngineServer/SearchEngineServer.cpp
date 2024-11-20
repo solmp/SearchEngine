@@ -9,6 +9,7 @@ SearchEngineServer::SearchEngineServer(const string& ip, unsigned short port)
 SearchEngineServer::~SearchEngineServer() { stop(); }
 
 void SearchEngineServer::start() {
+   CacheManager::getInstance();
   _pool.start();
   _server.setAllCallback(
       std::bind(&SearchEngineServer::OnNewConnection, this,

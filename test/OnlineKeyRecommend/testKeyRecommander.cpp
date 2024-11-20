@@ -4,7 +4,7 @@ int main() {
   // 初始化配置信息
   Configuration* config = Configuration::getInstance();
   config->LoadConfig("../conf/config.json");
-  // 初始化词典
+  // 初始化词典: 加载词典和字符位置索引
   Dictionary* dict = Dictionary::getInstance();
   dict->LoadDictionary(config);
   KeyRecommander keyRecommander("hello", nullptr);

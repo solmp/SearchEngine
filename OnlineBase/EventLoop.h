@@ -36,6 +36,7 @@ class EventLoop {
   void unloop() {
     _timer.stop();
     _isLooping = false;
+    CacheManager::getInstance()->storePublicCache();
   }
   /**
    * @brief 处理新连接

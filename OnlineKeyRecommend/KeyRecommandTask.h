@@ -19,8 +19,8 @@ class KeyRecommandTask : public HttpTask {
   void process() override {
     {
       KeyRecommander keyRecommander(_msg, _conn);  // 创建关键词推荐器
-      keyRecommander.doQuery();                         // 查询候选词
-      keyRecommander.response();                        // 返回查询结果
+      keyRecommander.doQuery();                    // 查询候选词
+      keyRecommander.response();                   // 返回查询结果
     }
   }
 };
