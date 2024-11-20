@@ -10,7 +10,7 @@
 #include "LRUCache.h"
 #include "RedisServer.h"
 
-using std::unique_ptr;
+using std::shared_ptr;
 
 #define LRU_CACHE_SIZE 5
 class CacheManager : NonCopyable {
@@ -44,7 +44,9 @@ class CacheManager : NonCopyable {
  private:
   static CacheManager* _instance;
   // LRU 缓存数组, 每个LRU对应一个线程
-  unordered_map<pthread_t, unique_ptr<LRUCache>> _caches;
+  unordered_map<pthread_t, shared_ptr<LRUCache>> _caches;
+  // 待更新的LRU缓存
+  unordered_map<pthread_t, shared_ptr<LRUCache>> _caches_pending;
   unordered_map<pthread_t, mutex> _mutexs;  // 线程互斥锁
   LRUCache _publicCache;                    // 公共LRU缓存
   mutex _mutex;                             // 公共互斥锁

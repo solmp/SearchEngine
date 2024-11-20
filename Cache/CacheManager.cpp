@@ -59,10 +59,17 @@ void CacheManager::updateThreadLRUCaches() {
       _publicCache.addRecord(record.first, record.second);
     }
   }
-  // 更新线程LRU缓存
-  for (auto& cache : _caches) {
+  // 更新线程LRU'缓存（pending）
+  for (auto& cache : _caches_pending) {
     std::lock_guard<std::mutex> lock(_mutexs[cache.first]);
     cache.second->update(_publicCache);
+  }
+  // 交换线程LRU缓存和线程LRU'缓存
+  for (auto& cache : _caches) {
+    std::lock_guard<std::mutex> lock(_mutexs[cache.first]);
+    // 直接交换会导致pending缓存丢失, 需要使用一个临时变量
+    shared_ptr<LRUCache> tmp = cache.second;
+    tmp.swap(_caches_pending[cache.first]);
   }
 }
 
