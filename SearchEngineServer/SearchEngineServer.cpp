@@ -22,6 +22,7 @@ void SearchEngineServer::start() {
 void SearchEngineServer::stop() {
   _server.stop();
   _pool.stop();
+  fprintf(stdout, "search engine server stoped\n");
 }
 
 void SearchEngineServer::OnNewConnection(const TcpConnectionPtr& conn) {

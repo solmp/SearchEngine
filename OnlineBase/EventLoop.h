@@ -34,6 +34,7 @@ class EventLoop {
    * @brief 退出事件循环
    */
   void unloop() {
+    fprintf(stdout, "Wait to exit...\n");
     _timer.stop();
     _isLooping = false;
     CacheManager::getInstance()->storePublicCache();

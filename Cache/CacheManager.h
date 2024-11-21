@@ -36,7 +36,10 @@ class CacheManager : NonCopyable {
   /**
    * @brief 保存公共缓存
    */
-  void storePublicCache() { _publicCache.store(); };
+  void storePublicCache() {
+    _publicCache.store();
+    fprintf(stdout, "cache stored\n");
+  };
 
  private:
   CacheManager();

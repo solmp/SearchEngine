@@ -27,6 +27,7 @@ void EventLoop::loop() {
       }
     }
   }
+  fprintf(stdout, "event loop stoped\n");
 }
 
 void EventLoop::handleNewConnection() {

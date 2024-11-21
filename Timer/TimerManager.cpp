@@ -22,6 +22,7 @@ void TimerManager::stop() {
       it.join();
     }
   }
+  fprintf(stdout, "Timer stoped\n");
 }
 
 void TimerManager::attach(TimerTask* task) {

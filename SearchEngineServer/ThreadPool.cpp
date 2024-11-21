@@ -24,6 +24,7 @@ void ThreadPool::stop() {
   for (auto& t : _threads) {
     t.join();
   }
+  fprintf(stdout, "thread poll stoped\n");
 }
 
 void ThreadPool::addTask(ElemType task) {
